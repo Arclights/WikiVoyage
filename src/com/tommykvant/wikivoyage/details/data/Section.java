@@ -7,8 +7,11 @@ public class Section implements Parcelable {
 	public Header header;
 	public String text;
 
-	public Section(String headerText, String text, int headerCount) {
-		header = new Header(headerText, headerCount);
+	public Section(Header header) {
+		this.header = header;
+	}
+
+	public void addText(String text) {
 		this.text = text;
 	}
 

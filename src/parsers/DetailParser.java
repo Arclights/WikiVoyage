@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.tommykvant.wikivoyage.details.data.Details;
+import com.tommykvant.wikivoyage.details.data.Header;
 import com.tommykvant.wikivoyage.details.data.Section;
 
 public class DetailParser {
@@ -17,6 +18,24 @@ public class DetailParser {
 		LineIterator iterator = new LineIterator(content);
 		Details d = new Details(title);
 
+		parseIntro(d, iterator);
+		parseSections(d, iterator);
+
+		return d;
+	}
+
+	private static void parseIntro(Details details, LineIterator iterator) {
+		while (iterator.hasNext()
+				&& (iterator.peekNext().length() == 0 || iterator.peekNext()
+						.charAt(0) == '{')) {
+			iterator.next();
+		}
+		Section section = new Section(new Header("Intro", 2));
+		section.addText(parseUntilCharlineilinei(iterator, '='));
+		details.addSection(section);
+	}
+
+	private static void parseSections(Details details, LineIterator iterator) {
 		while (iterator.hasNext()) {
 			String line = iterator.next();
 			if (line.length() > 0) {
@@ -24,30 +43,24 @@ public class DetailParser {
 					int headerCounter = countChars(line, 0, '=');
 					String headerText = line.split(multipleChars('=',
 							headerCounter))[1];
-					StringBuilder text = new StringBuilder();
-					while (iterator.peekNext().length() == 0 || iterator.peekNext().charAt(0) != '=') {
-						text.append(iterator.next());
-						if (!iterator.hasNext()) {
-							break;
-						}
-					}
-					Section section = new Section(headerText, text.toString(),
-							headerCounter);
-					d.addSection(section);
+					Header header = new Header(headerText, headerCounter);
+					Section section = new Section(header);
+					section.addText(parseUntilCharlineilinei(iterator, '='));
+					details.addSection(section);
 
-				} else if (line.charAt(0) == '{' && line.charAt(1) == '{'
-						&& line.length() > 4) {
-					System.out.println(line);
-					String[] options = line.replace("{", "").replace("}", "")
-							.split("\\|");
-					if (options[0].equals("pagebanner")) {
-						System.out.println("Pagebanner: " + options[1]);
-					}
 				}
 			}
 		}
+	}
 
-		return d;
+	private static String parseUntilCharlineilinei(LineIterator iterator, char c) {
+		StringBuilder text = new StringBuilder();
+		while (iterator.hasNext()
+				&& (iterator.peekNext().length() == 0 || iterator.peekNext()
+						.charAt(0) != c)) {
+			text.append(iterator.next());
+		}
+		return text.toString();
 	}
 
 	private void parseText() {
