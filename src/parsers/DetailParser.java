@@ -18,42 +18,32 @@ public class DetailParser {
 		LineIterator iterator = new LineIterator(content);
 		Details d = new Details(title);
 
-		parseIntro(d, iterator);
 		parseSections(d, iterator);
 
 		return d;
 	}
 
-	private static void parseIntro(Details details, LineIterator iterator) {
-		while (iterator.hasNext()
-				&& (iterator.peekNext().length() == 0 || iterator.peekNext()
-						.charAt(0) == '{')) {
-			iterator.next();
-		}
-		Section section = new Section(new Header("Intro", 2));
-		section.addText(parseUntilCharlineilinei(iterator, '='));
-		details.addSection(section);
-	}
 
 	private static void parseSections(Details details, LineIterator iterator) {
-		while (iterator.hasNext()) {
-			String line = iterator.next();
-			if (line.length() > 0) {
-				if (line.charAt(0) == '=') {
-					int headerCounter = countChars(line, 0, '=');
-					String headerText = line.split(multipleChars('=',
-							headerCounter))[1];
-					Header header = new Header(headerText, headerCounter);
-					Section section = new Section(header);
-					section.addText(parseUntilCharlineilinei(iterator, '='));
-					details.addSection(section);
-
-				}
+		Header header = new Header("Intro", 2);
+		while(true) {
+			details.addSection(new Section(header, ContentParser
+					.parse(iterator)));
+			if (!iterator.hasNext()) {
+				break;
 			}
+			header = parseHeader(iterator);
 		}
 	}
 
-	private static String parseUntilCharlineilinei(LineIterator iterator, char c) {
+	private static Header parseHeader(LineIterator iterator) {
+		String line = iterator.next();
+		int headerCounter = countChars(line, 0, '=');
+		String headerText = line.split(multipleChars('=', headerCounter))[1];
+		return new Header(headerText, headerCounter);
+	}
+
+	private static String parseUntilChar(LineIterator iterator, char c) {
 		StringBuilder text = new StringBuilder();
 		while (iterator.hasNext()
 				&& (iterator.peekNext().length() == 0 || iterator.peekNext()
@@ -61,10 +51,6 @@ public class DetailParser {
 			text.append(iterator.next());
 		}
 		return text.toString();
-	}
-
-	private void parseText() {
-
 	}
 
 	private static void printArray(String[] in) {

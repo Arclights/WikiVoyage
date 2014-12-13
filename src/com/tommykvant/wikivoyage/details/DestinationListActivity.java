@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 
 import com.tommykvant.wikivoyage.R;
 import com.tommykvant.wikivoyage.details.data.Details;
@@ -73,6 +74,7 @@ public class DestinationListActivity extends ActionBarActivity implements
 		}
 
 		pageName = getIntent().getExtras().getString(DETAIL_PAGE_NAME);
+		Log.d("DestinationListActivity.onCreate", "Starting an activity for "+pageName);
 		new DetailLoader().execute(pageName);
 		setTitle(pageName);
 	}

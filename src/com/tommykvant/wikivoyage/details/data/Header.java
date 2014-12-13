@@ -1,9 +1,13 @@
 package com.tommykvant.wikivoyage.details.data;
 
 import utils.Utils;
+import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.View;
+import android.widget.TextView;
 
 public class Header implements Parcelable {
 	private String text;
@@ -15,7 +19,7 @@ public class Header implements Parcelable {
 	}
 
 	public int getLeftPadding(Resources res) {
-		return Utils.dpsToPixels(res, (headerCount - 2)*20);
+		return Utils.dpsToPixels(res, (headerCount - 2) * 20);
 	}
 
 	private Header(Parcel in) {
@@ -44,6 +48,14 @@ public class Header implements Parcelable {
 
 	@Override
 	public String toString() {
-		return headerCount+"."+text;
+		return headerCount + "." + text;
+	}
+
+	public View getView(Context context) {
+		TextView tv = new TextView(context);
+		tv.setText(text);
+		tv.setTextSize(Utils.spToPixels(context.getResources(), 16));
+		tv.setTypeface(null, Typeface.BOLD);
+		return tv;
 	}
 }

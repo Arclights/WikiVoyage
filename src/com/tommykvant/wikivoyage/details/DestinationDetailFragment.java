@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ScrollView;
 
 import com.tommykvant.wikivoyage.R;
 import com.tommykvant.wikivoyage.details.data.Section;
@@ -44,8 +44,6 @@ public class DestinationDetailFragment extends Fragment {
 		}
 	}
 
-
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -54,8 +52,9 @@ public class DestinationDetailFragment extends Fragment {
 
 		// Show the dummy content as text in a TextView.
 		if (section != null) {
-			((TextView) rootView.findViewById(R.id.section_detail))
-					.setText(section.text);
+			ScrollView detailLayout = ((ScrollView) rootView
+					.findViewById(R.id.section_detail));
+			detailLayout.addView(section.getView(getActivity()));
 		}
 
 		return rootView;
