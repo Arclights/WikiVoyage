@@ -1,11 +1,9 @@
-package parsers;
+package com.tommykvant.wikivotage.creators;
 
-import java.io.IOException;
+import com.tommykvant.wikivoyage.details.data.TextContent;
 
-import com.tommykvant.wikivoyage.details.data.Text;
-
-public class TextParser {
-	public static Text parse(String text) throws IOException {
+public class TextCreator {
+	public static TextContent create(String text){
 		// Bold
 		text = text.replaceAll("\'\'\'(.+?)\'\'\'", "<b>$1</b>");
 		// Iltalic
@@ -26,7 +24,7 @@ public class TextParser {
 		text = text.replaceAll("\\[\\[Image.+?\\]\\]", "");
 		// Skip files
 		text = text.replaceAll("\\[\\[File.+?\\]\\]", "");
-		Text out = new Text(text);
+		TextContent out = new TextContent(text);
 		return out;
 	}
 

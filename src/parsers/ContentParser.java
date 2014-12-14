@@ -1,10 +1,9 @@
 package parsers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import android.util.Log;
-
+import com.tommykvant.wikivotage.creators.ListCreator;
+import com.tommykvant.wikivotage.creators.TextCreator;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.HorizontalSpace;
 
@@ -23,19 +22,11 @@ public class ContentParser {
 				parseComments(iterator);
 			} else if (iterator.peekNext().startsWith("*")) {
 				// Parse lists separately
-				String text = parseList(iterator);
-				try {
-					out.add(TextParser.parse(text));
-				} catch (IOException e) {
-					Log.e("ContentParser", "Corld not parse: " + text);
-				}
+//				String text = parseList(iterator);
+				out.add(ListCreator.create(iterator));
 			} else {
 				String text = parseText(iterator);
-				try {
-					out.add(TextParser.parse(text));
-				} catch (IOException e) {
-					Log.e("ContentParser", "Corld not parse: " + text);
-				}
+				out.add(TextCreator.create(text));
 			}
 		}
 
@@ -44,14 +35,8 @@ public class ContentParser {
 
 	private static String parseList(LineIterator iterator) {
 		StringBuilder sb = new StringBuilder();
-		while (iterator.hasNext() && !iterator.peekNext().equals("")
-				&& !iterator.peekNext().startsWith("=")) {
-			sb.append(iterator.next());
-
-			if (iterator.hasNext() && !iterator.peekNext().equals("")
-					&& !iterator.peekNext().startsWith("=")) {
-				sb.append("<br>");
-			}
+		while (iterator.hasNext() && iterator.peekNext().startsWith("*")) {
+			sb.append(iterator.next()).append("\n");
 		}
 		return sb.toString();
 	}
@@ -62,7 +47,7 @@ public class ContentParser {
 				&& !iterator.peekNext().startsWith("=")
 				&& !iterator.peekNext().startsWith("*")) {
 			sb.append(iterator.next());
-			
+
 			if (iterator.hasNext() && !iterator.peekNext().equals("")
 					&& !iterator.peekNext().startsWith("=")
 					&& !iterator.peekNext().startsWith("*")) {

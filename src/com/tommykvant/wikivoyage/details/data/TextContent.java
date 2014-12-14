@@ -9,11 +9,11 @@ import android.widget.TextView;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.ContentHtml;
 
-public class Text extends Content {
+public class TextContent extends Content {
 
 	String text;
 
-	public Text(String text) {
+	public TextContent(String text) {
 		this.text = text;
 	}
 
@@ -23,6 +23,7 @@ public class Text extends Content {
 		tv.setText(ContentHtml.fromHtml(text));
 		tv.setLinksClickable(true);
 		tv.setMovementMethod(LinkMovementMethod.getInstance());
+		tv.setPadding(0, 0, 0, 0);
 		return tv;
 	}
 
