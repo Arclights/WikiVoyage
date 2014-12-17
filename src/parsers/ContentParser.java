@@ -45,7 +45,8 @@ public class ContentParser {
 		while (iterator.hasNext() && !iterator.peekNext().equals("")
 				&& !iterator.peekNext().startsWith("=")
 				&& !iterator.peekNext().startsWith("*")) {
-			sb.append(iterator.next());
+			String text = fixIndent(iterator.next());
+			sb.append(text);
 
 			if (iterator.hasNext() && !iterator.peekNext().equals("")
 					&& !iterator.peekNext().startsWith("=")
@@ -54,6 +55,29 @@ public class ContentParser {
 			}
 		}
 		return sb.toString();
+	}
+
+	private static String fixIndent(String text) {
+		int indentDepth = getIndentDepth(text);
+		return generateIndent(indentDepth) + text.substring(indentDepth);
+	}
+
+	private static String generateIndent(int indentDepth) {
+		StringBuilder out = new StringBuilder();
+		for (int i = 0; i < indentDepth; i++) {
+			out.append("&nbsp;&nbsp;&nbsp;");
+		}
+		return out.toString();
+	}
+
+	private static int getIndentDepth(String text) {
+		StringIterator iterator = new StringIterator(text);
+		int indentDepth = 0;
+		while (iterator.hasNext() && iterator.peekNext() == ':') {
+			indentDepth++;
+			iterator.next();
+		}
+		return indentDepth;
 	}
 
 	private static void parseComments(LineIterator iterator) {
