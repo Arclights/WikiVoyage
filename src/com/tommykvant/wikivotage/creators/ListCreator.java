@@ -24,8 +24,9 @@ public class ListCreator {
 			} else if (currLevel < level) {
 				return out;
 			} else {
-				out.addItem(new ListContentItem(TextCreator.create(getItem(
-						iterator).substring(level))));
+				String item = getItem(iterator);
+				out.addItem(new ListContentItem(TextCreator.create(item
+						.substring(level))));
 			}
 		}
 		return out;
@@ -35,7 +36,7 @@ public class ListCreator {
 		StringBuilder item = new StringBuilder();
 		if (iterator.hasNext()) {
 			item.append(iterator.next());
-			while (iterator.hasNext() && iterator.peekNext().length()>0
+			while (iterator.hasNext() && iterator.peekNext().length() > 0
 					&& !iterator.peekNext().startsWith("*")) {
 				item.append(iterator.next());
 			}

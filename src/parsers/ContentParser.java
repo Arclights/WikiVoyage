@@ -22,7 +22,6 @@ public class ContentParser {
 				parseComments(iterator);
 			} else if (iterator.peekNext().startsWith("*")) {
 				// Parse lists separately
-//				String text = parseList(iterator);
 				out.add(ListCreator.create(iterator));
 			} else {
 				String text = parseText(iterator);

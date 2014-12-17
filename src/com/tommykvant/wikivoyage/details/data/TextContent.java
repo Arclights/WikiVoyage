@@ -23,7 +23,6 @@ public class TextContent extends Content {
 		tv.setText(ContentHtml.fromHtml(text));
 		tv.setLinksClickable(true);
 		tv.setMovementMethod(LinkMovementMethod.getInstance());
-		tv.setPadding(0, 0, 0, 0);
 		return tv;
 	}
 

@@ -197,8 +197,6 @@ class HtmlToSpannedConverter implements ContentHandler {
 			start(mSpannableStringBuilder, new Monospace());
 		} else if (tag.equalsIgnoreCase("a")) {
 			startA(mSpannableStringBuilder, attributes);
-		} else if (tag.equalsIgnoreCase("aInternal")) {
-			startA(mSpannableStringBuilder, attributes);
 		} else if (tag.equalsIgnoreCase("u")) {
 			start(mSpannableStringBuilder, new Underline());
 		} else if (tag.equalsIgnoreCase("sup")) {
@@ -254,9 +252,7 @@ class HtmlToSpannedConverter implements ContentHandler {
 			end(mSpannableStringBuilder, Monospace.class, new TypefaceSpan(
 					"monospace"));
 		} else if (tag.equalsIgnoreCase("a")) {
-			endA(mSpannableStringBuilder, false);
-		} else if (tag.equalsIgnoreCase("aInternal")) {
-			endA(mSpannableStringBuilder, true);
+			endA(mSpannableStringBuilder);
 		} else if (tag.equalsIgnoreCase("u")) {
 			end(mSpannableStringBuilder, Underline.class, new UnderlineSpan());
 		} else if (tag.equalsIgnoreCase("sup")) {
@@ -379,7 +375,7 @@ class HtmlToSpannedConverter implements ContentHandler {
 		text.setSpan(new Href(href), len, len, Spannable.SPAN_MARK_MARK);
 	}
 
-	private static void endA(SpannableStringBuilder text, boolean internal) {
+	private static void endA(SpannableStringBuilder text) {
 		int len = text.length();
 		Object obj = getLast(text, Href.class);
 		int where = text.getSpanStart(obj);
@@ -390,13 +386,8 @@ class HtmlToSpannedConverter implements ContentHandler {
 			Href h = (Href) obj;
 
 			if (h.mHref != null) {
-				if (internal) {
-					text.setSpan(new InternalUrlSpan(h.mHref), where, len,
-							Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-				} else {
-					text.setSpan(new ExternalUrlSpan(h.mHref), where, len,
-							Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-				}
+				text.setSpan(new UrlSpan(h.mHref), where, len,
+						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 			}
 		}
 	}
