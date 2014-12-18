@@ -9,8 +9,6 @@ import com.tommykvant.wikivoyage.details.data.ListContentItem;
 public class ListCreator {
 
 	public static ListContent create(LineIterator iterator) {
-		// LineIterator iterator = new LineIterator(text);
-		// System.out.println(text);
 		return create(iterator, 1);
 	}
 
@@ -24,25 +22,10 @@ public class ListCreator {
 			} else if (currLevel < level) {
 				return out;
 			} else {
-				String item = getItem(iterator);
-				out.addItem(new ListContentItem(TextCreator.create(item
-						.substring(level))));
+				out.addItem(new ListContentItem(iterator));
 			}
 		}
 		return out;
-	}
-
-	private static String getItem(LineIterator iterator) {
-		StringBuilder item = new StringBuilder();
-		if (iterator.hasNext()) {
-			item.append(iterator.next());
-			while (iterator.hasNext() && iterator.peekNext().length() > 0
-					&& !iterator.peekNext().startsWith("*")) {
-				item.append(iterator.next());
-			}
-		}
-
-		return item.toString();
 	}
 
 	private static int getLevel(String line) {

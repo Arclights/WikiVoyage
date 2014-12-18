@@ -1,11 +1,13 @@
 package com.tommykvant.wikivoyage.details.data;
 
+import parsers.LineIterator;
 import android.content.Context;
 import android.os.Parcel;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tommykvant.wikivotage.creators.TextFormatter;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.ContentHtml;
 
@@ -13,8 +15,9 @@ public class TextContent extends Content {
 
 	String text;
 
-	public TextContent(String text) {
-		this.text = text;
+	public TextContent(LineIterator iterator) {
+		this.text = TextFormatter.format(iterator.next());
+		// TODO deal with templates
 	}
 
 	@Override

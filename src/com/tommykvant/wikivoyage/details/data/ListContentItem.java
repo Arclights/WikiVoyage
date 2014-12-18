@@ -1,5 +1,6 @@
 package com.tommykvant.wikivoyage.details.data;
 
+import parsers.LineIterator;
 import utils.Utils;
 import android.content.Context;
 import android.os.Parcel;
@@ -9,11 +10,11 @@ import android.widget.TextView;
 
 import com.tommykvant.wikivoyage.details.content.Content;
 
-public class ListContentItem extends Content{
+public class ListContentItem extends Content {
 	Content item;
 
-	public ListContentItem(Content item) {
-		this.item = item;
+	public ListContentItem(LineIterator iterator) {
+		this.item = new TextContent(iterator);
 	}
 
 	public View getView(Context context) {
@@ -23,6 +24,7 @@ public class ListContentItem extends Content{
 		TextView bullet = new TextView(context);
 		bullet.setText("•");
 		bullet.setId(1542);
+		bullet.setPadding(0, 0, Utils.dpsToPixels(context.getResources(), 5), 0);
 
 		l.addView(bullet);
 
@@ -44,6 +46,6 @@ public class ListContentItem extends Content{
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

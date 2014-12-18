@@ -3,9 +3,11 @@ package parsers;
 import java.util.ArrayList;
 
 import com.tommykvant.wikivotage.creators.ListCreator;
-import com.tommykvant.wikivotage.creators.TextCreator;
+import com.tommykvant.wikivotage.creators.TextFormatter;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.HorizontalSpace;
+import com.tommykvant.wikivoyage.details.data.IndentedTextContent;
+import com.tommykvant.wikivoyage.details.data.TextContent;
 
 public class ContentParser {
 
@@ -14,7 +16,7 @@ public class ContentParser {
 
 		while (iterator.hasNext() && !iterator.peekNext().startsWith("=")) {
 			if (iterator.peekNext().equals("")) {
-				// TODO Deal with horizontal spacing
+				// deal with horizontal spacing
 				out.add(new HorizontalSpace());
 				iterator.next();
 			} else if (iterator.peekNext().startsWith("<!--")) {
@@ -23,9 +25,12 @@ public class ContentParser {
 			} else if (iterator.peekNext().startsWith("*")) {
 				// Parse lists separately
 				out.add(ListCreator.create(iterator));
+			} else if (iterator.peekNext().startsWith(":")) {
+				// Indention
+				out.add(new IndentedTextContent(iterator));
 			} else {
-				String text = parseText(iterator);
-				out.add(TextCreator.create(text));
+				// String text = parseText(iterator);
+				out.add(new TextContent(iterator));
 			}
 		}
 

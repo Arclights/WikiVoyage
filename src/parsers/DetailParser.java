@@ -23,10 +23,9 @@ public class DetailParser {
 		return d;
 	}
 
-
 	private static void parseSections(Details details, LineIterator iterator) {
 		Header header = new Header("Intro", 2);
-		while(true) {
+		while (true) {
 			details.addSection(new Section(header, ContentParser
 					.parse(iterator)));
 			if (!iterator.hasNext()) {
@@ -41,23 +40,6 @@ public class DetailParser {
 		int headerCounter = countChars(line, 0, '=');
 		String headerText = line.split(multipleChars('=', headerCounter))[1];
 		return new Header(headerText, headerCounter);
-	}
-
-	private static String parseUntilChar(LineIterator iterator, char c) {
-		StringBuilder text = new StringBuilder();
-		while (iterator.hasNext()
-				&& (iterator.peekNext().length() == 0 || iterator.peekNext()
-						.charAt(0) != c)) {
-			text.append(iterator.next());
-		}
-		return text.toString();
-	}
-
-	private static void printArray(String[] in) {
-		System.out.println("Array:");
-		for (String s : in) {
-			System.out.println(s);
-		}
 	}
 
 	private static int countChars(String line, int fromPos, char charToCount) {

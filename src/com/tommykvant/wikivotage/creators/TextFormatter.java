@@ -1,9 +1,8 @@
 package com.tommykvant.wikivotage.creators;
 
-import com.tommykvant.wikivoyage.details.data.TextContent;
 
-public class TextCreator {
-	public static TextContent create(String text) {
+public class TextFormatter {
+	public static String format(String text) {
 		// Bold
 		text = text.replaceAll("\'\'\'(.+?)\'\'\'", "<b>$1</b>");
 		// Iltalic
@@ -26,8 +25,11 @@ public class TextCreator {
 		text = text.replaceAll("\\[\\[Image.+?\\]\\]", "");
 		// Skip files
 		text = text.replaceAll("\\[\\[File.+?\\]\\]", "");
+		// Remove list markup
+		text = text.replaceAll("^\\*+", "");
+		// Remove indentation markup
+		text = text.replaceAll("^:+", "");
 
-		TextContent out = new TextContent(text);
-		return out;
+		return text;
 	}
 }
