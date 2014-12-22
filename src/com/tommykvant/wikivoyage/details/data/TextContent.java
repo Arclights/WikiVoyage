@@ -1,6 +1,10 @@
 package com.tommykvant.wikivoyage.details.data;
 
+import java.util.ArrayList;
+
 import parsers.LineIterator;
+import parsers.StringIterator;
+import android.R.string;
 import android.content.Context;
 import android.os.Parcel;
 import android.text.method.LinkMovementMethod;
@@ -16,8 +20,35 @@ public class TextContent extends Content {
 	String text;
 
 	public TextContent(LineIterator iterator) {
-		this.text = TextFormatter.format(iterator.next());
-		// TODO deal with templates
+		if (iterator.peekNext().contains("{{")) {
+			this.text = parseWithTemplates(iterator);
+		} else {
+			this.text = TextFormatter.format(iterator.next());
+		}
+	}
+
+	private String parseWithTemplates(LineIterator iterator) {
+		StringBuilder textBuilder = new StringBuilder();
+		StringBuilder template = new StringBuilder();
+		StringIterator strIter;
+		boolean foundTemplate = false;
+		while (iterator.hasNext()) {
+			strIter = new StringIterator(iterator.next());
+			while (strIter.hasNext()) {
+				if (strIter.peekNext2().equals("{{")) {
+					strIter.next();
+					strIter.next();
+					foundTemplate = true;
+				} else if (strIter.peekNext2().equals("}}")) {
+					foundTemplate = false;
+				} else if (!foundTemplate) {
+					textBuilder.append(strIter.next());
+				} else {
+					template.append(strIter.next());
+				}
+			}
+		}
+		return textBuilder.toString();
 	}
 
 	@Override
