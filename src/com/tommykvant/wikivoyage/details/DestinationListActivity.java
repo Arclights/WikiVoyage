@@ -1,13 +1,5 @@
 package com.tommykvant.wikivoyage.details;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import org.json.JSONException;
-
-import parsers.DetailParser;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -18,9 +10,16 @@ import android.util.Log;
 import com.tommykvant.wikivoyage.R;
 import com.tommykvant.wikivoyage.details.data.Details;
 import com.tommykvant.wikivoyage.details.data.Section;
+import com.tommykvant.wikivoyage.fetchers.UriGenerator;
+import com.tommykvant.wikivoyage.fetchers.WebFetcher;
+import com.tommykvant.wikivoyage.parsers.DetailParser;
 
-import fetcher.UriGenerator;
-import fetcher.WebFetcher;
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * An activity representing a list of Sections. This activity has different
@@ -95,10 +94,11 @@ public class DestinationListActivity extends ActionBarActivity implements
 				e.printStackTrace();
 			}
 			String result = WebFetcher.fetch(uri);
+            System.out.println("result: "+result);
 			Details d = null;
 			try {
 				d = DetailParser.parse(result, page);
-			} catch (IOException e) {
+            } catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (JSONException e) {

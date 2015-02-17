@@ -1,18 +1,10 @@
 package com.tommykvant.wikivoyage;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-
-import org.json.JSONException;
-
-import parsers.SearchParser;
-import utils.Utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -26,11 +18,19 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.tommykvant.wikivoyage.containers.SearchResult;
 import com.tommykvant.wikivoyage.details.DestinationListActivity;
+import com.tommykvant.wikivoyage.fetchers.UriGenerator;
+import com.tommykvant.wikivoyage.fetchers.WebFetcher;
+import com.tommykvant.wikivoyage.parsers.SearchParser;
+import com.tommykvant.wikivoyage.utils.Utils;
 
-import containers.SearchResult;
-import fetcher.UriGenerator;
-import fetcher.WebFetcher;
+import org.json.JSONException;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class SearchResults extends ActionBarActivity {
 
@@ -183,8 +183,8 @@ public class SearchResults extends ActionBarActivity {
 			TextView title = (TextView) convertView
 					.findViewById(android.R.id.text1);
 			int buildVersion = android.os.Build.VERSION.SDK_INT;
-			if (buildVersion >= android.os.Build.VERSION_CODES.HONEYCOMB_MR2) {
-				if (buildVersion >= android.os.Build.VERSION_CODES.L) {
+			if (buildVersion >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+				if (buildVersion >= Build.VERSION_CODES.LOLLIPOP) {
 					title.setTextAppearance(getContext(),
 							android.R.style.TextAppearance_Material_Subhead);
 				}

@@ -41,6 +41,7 @@ public class DestinationDetailFragment extends Fragment {
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
 			section = (Section) getArguments().getParcelable(ARG_SECTION);
+            System.out.println("section: "+section);
 		}
 	}
 

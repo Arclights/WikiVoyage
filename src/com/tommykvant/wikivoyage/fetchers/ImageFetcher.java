@@ -1,15 +1,15 @@
-package fetcher;
+package com.tommykvant.wikivoyage.fetchers;
 
-import java.io.InputStream;
-import java.net.URI;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
+import java.io.InputStream;
+import java.net.URI;
 
 public class ImageFetcher {
 	public static Bitmap fetch(URI url) {

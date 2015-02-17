@@ -1,30 +1,28 @@
 package com.tommykvant.wikivoyage.details.data;
 
-import java.util.ArrayList;
-
-import parsers.LineIterator;
-import parsers.StringIterator;
-import android.R.string;
 import android.content.Context;
 import android.os.Parcel;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
-import com.tommykvant.wikivotage.creators.TextFormatter;
+import com.tommykvant.wikivoyage.creators.TextFormatter;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.ContentHtml;
+import com.tommykvant.wikivoyage.parsers.LineIterator;
+import com.tommykvant.wikivoyage.parsers.StringIterator;
 
 public class TextContent extends Content {
 
 	String text;
 
 	public TextContent(LineIterator iterator) {
-		if (iterator.peekNext().contains("{{")) {
-			this.text = parseWithTemplates(iterator);
-		} else {
+//		if (iterator.peekNext().contains("{{")) {
+//            System.out.println("To parse with templates");
+//            this.text = parseWithTemplates(iterator);
+//		} else {
 			this.text = TextFormatter.format(iterator.next());
-		}
+//		}
 	}
 
 	private String parseWithTemplates(LineIterator iterator) {
@@ -48,7 +46,8 @@ public class TextContent extends Content {
 				}
 			}
 		}
-		return textBuilder.toString();
+        System.out.println(textBuilder);
+        return textBuilder.toString();
 	}
 
 	@Override

@@ -1,17 +1,5 @@
 package com.tommykvant.wikivoyage.details.content;
 
-import java.io.IOException;
-import java.io.StringReader;
-
-import org.ccil.cowan.tagsoup.HTMLSchema;
-import org.ccil.cowan.tagsoup.Parser;
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -31,6 +19,18 @@ import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
 
 import com.tommykvant.wikivoyage.details.content.ContentHtml.TagHandler;
+
+import org.ccil.cowan.tagsoup.HTMLSchema;
+import org.ccil.cowan.tagsoup.Parser;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.io.StringReader;
 
 /**
  * This class processes HTML strings into displayable styled text. Not all HTML

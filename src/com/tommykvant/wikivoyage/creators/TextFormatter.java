@@ -1,4 +1,4 @@
-package com.tommykvant.wikivotage.creators;
+package com.tommykvant.wikivoyage.creators;
 
 
 public class TextFormatter {

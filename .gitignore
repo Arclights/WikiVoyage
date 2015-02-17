@@ -1,0 +1,11 @@
+.idea/
+.gradle/
+build/
+gen/
+gradle/
+gradlew
+gradlew.bat
+local.properties
+settings.gradle
+*~
+WikiVoyage.iml

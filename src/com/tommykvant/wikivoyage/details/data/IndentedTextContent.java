@@ -1,10 +1,11 @@
 package com.tommykvant.wikivoyage.details.data;
 
-import parsers.LineIterator;
-import utils.Utils;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
+
+import com.tommykvant.wikivoyage.parsers.LineIterator;
+import com.tommykvant.wikivoyage.utils.Utils;
 
 public class IndentedTextContent extends TextContent {
 

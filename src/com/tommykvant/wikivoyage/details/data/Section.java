@@ -1,8 +1,5 @@
 package com.tommykvant.wikivoyage.details.data;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Parcel;
@@ -12,12 +9,16 @@ import android.widget.LinearLayout;
 
 import com.tommykvant.wikivoyage.details.content.Content;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Section implements Parcelable {
 	public Header header;
 	public ArrayList<Content> content;
 
 	public Section(Header header, ArrayList<Content> content) {
-		this.header = header;
+        System.out.println("New section: "+header);
+        this.header = header;
 		this.content = content;
 	}
 

@@ -1,6 +1,5 @@
 package com.tommykvant.wikivoyage.details.data;
 
-import utils.Utils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -8,6 +7,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
+
+import com.tommykvant.wikivoyage.utils.Utils;
 
 public class Header implements Parcelable {
 	private String text;

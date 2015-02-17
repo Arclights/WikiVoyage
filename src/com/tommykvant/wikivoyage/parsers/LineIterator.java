@@ -1,4 +1,4 @@
-package parsers;
+package com.tommykvant.wikivoyage.parsers;
 
 public class LineIterator {
 

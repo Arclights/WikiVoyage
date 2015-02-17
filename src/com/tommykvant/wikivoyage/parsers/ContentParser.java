@@ -1,13 +1,12 @@
-package parsers;
+package com.tommykvant.wikivoyage.parsers;
 
-import java.util.ArrayList;
-
-import com.tommykvant.wikivotage.creators.ListCreator;
-import com.tommykvant.wikivotage.creators.TextFormatter;
+import com.tommykvant.wikivoyage.creators.ListCreator;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.HorizontalSpace;
 import com.tommykvant.wikivoyage.details.data.IndentedTextContent;
 import com.tommykvant.wikivoyage.details.data.TextContent;
+
+import java.util.ArrayList;
 
 public class ContentParser {
 
@@ -15,7 +14,7 @@ public class ContentParser {
 		ArrayList<Content> out = new ArrayList<Content>();
 
 		while (iterator.hasNext() && !iterator.peekNext().startsWith("=")) {
-			if (iterator.peekNext().equals("")) {
+            if (iterator.peekNext().equals("")) {
 				// deal with horizontal spacing
 				out.add(new HorizontalSpace());
 				iterator.next();

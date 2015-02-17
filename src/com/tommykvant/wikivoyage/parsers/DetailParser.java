@@ -1,13 +1,13 @@
-package parsers;
-
-import java.io.IOException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+package com.tommykvant.wikivoyage.parsers;
 
 import com.tommykvant.wikivoyage.details.data.Details;
 import com.tommykvant.wikivoyage.details.data.Header;
 import com.tommykvant.wikivoyage.details.data.Section;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class DetailParser {
 
@@ -17,18 +17,17 @@ public class DetailParser {
 				.getJSONObject("wikitext").getString("*");
 		LineIterator iterator = new LineIterator(content);
 		Details d = new Details(title);
-
-		parseSections(d, iterator);
+        parseSections(d, iterator);
 
 		return d;
 	}
 
 	private static void parseSections(Details details, LineIterator iterator) {
 		Header header = new Header("Intro", 2);
-		while (true) {
+        while (true) {
 			details.addSection(new Section(header, ContentParser
 					.parse(iterator)));
-			if (!iterator.hasNext()) {
+            if (!iterator.hasNext()) {
 				break;
 			}
 			header = parseHeader(iterator);

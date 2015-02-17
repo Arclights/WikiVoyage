@@ -1,7 +1,5 @@
 package com.tommykvant.wikivoyage.details.content;
 
-import com.tommykvant.wikivoyage.details.DestinationListActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +9,8 @@ import android.text.ParcelableSpan;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
+
+import com.tommykvant.wikivoyage.details.DestinationListActivity;
 
 public class UrlSpan extends ClickableSpan implements ParcelableSpan {
 	protected final String mURL;

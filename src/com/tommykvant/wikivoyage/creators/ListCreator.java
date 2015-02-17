@@ -1,10 +1,9 @@
-package com.tommykvant.wikivotage.creators;
-
-import parsers.LineIterator;
-import parsers.StringIterator;
+package com.tommykvant.wikivoyage.creators;
 
 import com.tommykvant.wikivoyage.details.data.ListContent;
 import com.tommykvant.wikivoyage.details.data.ListContentItem;
+import com.tommykvant.wikivoyage.parsers.LineIterator;
+import com.tommykvant.wikivoyage.parsers.StringIterator;
 
 public class ListCreator {
 

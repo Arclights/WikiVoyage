@@ -1,4 +1,4 @@
-package containers;
+package com.tommykvant.wikivoyage.containers;
 
 
 public class SearchResult {

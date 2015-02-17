@@ -1,4 +1,4 @@
-package utils;
+package com.tommykvant.wikivoyage.utils;
 
 import android.content.res.Resources;
 

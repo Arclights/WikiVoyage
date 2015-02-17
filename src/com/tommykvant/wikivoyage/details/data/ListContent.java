@@ -1,18 +1,14 @@
 package com.tommykvant.wikivoyage.details.data;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import utils.Utils;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Parcel;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.tommykvant.wikivoyage.details.content.Content;
+import com.tommykvant.wikivoyage.utils.Utils;
+
+import java.util.ArrayList;
 
 public class ListContent extends Content {
 

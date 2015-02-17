@@ -1,15 +1,16 @@
-package parsers;
+package com.tommykvant.wikivoyage.parsers;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
+import android.graphics.Bitmap;
+
+import com.tommykvant.wikivoyage.fetchers.ImageFetcher;
+import com.tommykvant.wikivoyage.fetchers.UriGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fetcher.ImageFetcher;
-import fetcher.UriGenerator;
-import android.graphics.Bitmap;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 
 public class ImageParser {
 

@@ -1,4 +1,4 @@
-package fetcher;
+package com.tommykvant.wikivoyage.fetchers;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;

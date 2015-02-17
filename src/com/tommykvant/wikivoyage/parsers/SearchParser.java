@@ -1,12 +1,12 @@
-package parsers;
+package com.tommykvant.wikivoyage.parsers;
 
-import java.util.ArrayList;
+import com.tommykvant.wikivoyage.containers.SearchResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import containers.SearchResult;
+import java.util.ArrayList;
 
 public class SearchParser {
 

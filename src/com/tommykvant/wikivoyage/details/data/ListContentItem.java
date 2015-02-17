@@ -1,7 +1,5 @@
 package com.tommykvant.wikivoyage.details.data;
 
-import parsers.LineIterator;
-import utils.Utils;
 import android.content.Context;
 import android.os.Parcel;
 import android.view.View;
@@ -9,6 +7,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tommykvant.wikivoyage.details.content.Content;
+import com.tommykvant.wikivoyage.parsers.LineIterator;
+import com.tommykvant.wikivoyage.utils.Utils;
 
 public class ListContentItem extends Content {
 	Content item;
