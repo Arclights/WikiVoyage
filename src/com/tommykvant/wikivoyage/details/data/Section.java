@@ -17,7 +17,6 @@ public class Section implements Parcelable {
 	public ArrayList<Content> content;
 
 	public Section(Header header, ArrayList<Content> content) {
-        System.out.println("New section: "+header);
         this.header = header;
 		this.content = content;
 	}

@@ -1,0 +1,8 @@
+{{do
+| name=The Lyric Theatre | url=http://www.lyric.co.uk/ | email=enquiries@lyric.co.uk
+| address= | lat= | long= | directions=Short walk from Hammersmith Tube station
+| phone= | tollfree= | fax=
+| hours= | price=
+| content=Not to be confused with its West End namesake this fascinating theatre comprises a Victorian interior transplanted into a modern office building. It offers a mix of modern interpretations of Shakespeare, musicals (Sprink Awakenings was a notable success) and plays that reflect the multicultural nature of its location, in particular serving the Asian and Afro-Caribbean populations of West London.
+}}
+[link to map of lat & long]<b><a href=url>name</a></b> [(<i>directions</i>)][, address][, ☎ phone][, fax: fax][, email: email]. [hours.] [content][price.]

@@ -9,66 +9,87 @@ import android.widget.TextView;
 import com.tommykvant.wikivoyage.creators.TextFormatter;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.ContentHtml;
+import com.tommykvant.wikivoyage.details.data.templates.Template;
+import com.tommykvant.wikivoyage.details.data.templates.TemplateFactory;
 import com.tommykvant.wikivoyage.parsers.LineIterator;
 import com.tommykvant.wikivoyage.parsers.StringIterator;
 
+import java.util.ArrayList;
+
 public class TextContent extends Content {
 
-	String text;
+    ArrayList<TextContentContainer> text;
 
-	public TextContent(LineIterator iterator) {
-//		if (iterator.peekNext().contains("{{")) {
-//            System.out.println("To parse with templates");
-//            this.text = parseWithTemplates(iterator);
-//		} else {
-			this.text = TextFormatter.format(iterator.next());
-//		}
-	}
+    public TextContent(LineIterator iterator) {
+        text = new ArrayList<>();
+        parseText(iterator);
+    }
 
-	private String parseWithTemplates(LineIterator iterator) {
-		StringBuilder textBuilder = new StringBuilder();
-		StringBuilder template = new StringBuilder();
-		StringIterator strIter;
-		boolean foundTemplate = false;
-		while (iterator.hasNext()) {
-			strIter = new StringIterator(iterator.next());
-			while (strIter.hasNext()) {
-				if (strIter.peekNext2().equals("{{")) {
-					strIter.next();
-					strIter.next();
-					foundTemplate = true;
-				} else if (strIter.peekNext2().equals("}}")) {
-					foundTemplate = false;
-				} else if (!foundTemplate) {
-					textBuilder.append(strIter.next());
-				} else {
-					template.append(strIter.next());
-				}
-			}
-		}
-        System.out.println(textBuilder);
-        return textBuilder.toString();
-	}
+    private void parseText(LineIterator iterator) {
+        StringBuilder textBuilder = new StringBuilder();
+        StringBuilder template = new StringBuilder();
+        StringIterator strIter;
+        strIter = new StringIterator(iterator.next());
+        while (strIter.hasNext()) {
+            if (strIter.peekNext2().equals("{{")) {
+                strIter = parseTemplate(iterator, strIter);
+            } else {
+                textBuilder.append(strIter.next());
+            }
+        }
+        text.add(new TextContentText(TextFormatter.format(textBuilder.toString())));
+    }
 
-	@Override
-	public View getView(Context context) {
-		TextView tv = new TextView(context);
-		tv.setText(ContentHtml.fromHtml(text));
-		tv.setLinksClickable(true);
-		tv.setMovementMethod(LinkMovementMethod.getInstance());
-		return tv;
-	}
+    private StringIterator parseTemplate(LineIterator lIter, StringIterator sIter) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(sIter.next());
+        sb.append(sIter.next());
+        // Dummy for now
+        do {
+            while (sIter.hasNext()) {
+                if (sIter.peekNext2().equals("}}")) {
+                    sb.append(sIter.next());
+                    sb.append(sIter.next());
+                    System.out.println("Template: " + sb.toString());
+                    text.add(TemplateFactory.getTemplate(sb.toString()));
+                    return sIter;
+                }
+                sb.append(sIter.next());
+            }
+            if (!sIter.hasNext()) {
+                sIter = new StringIterator(lIter.next());
+            }
+        } while (lIter.hasNext());
+        return sIter;
+    }
 
-	@Override
-	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    private String gatherText() {
+        StringBuilder out = new StringBuilder();
+        for (TextContentContainer t : text) {
+            out.append(t.getContent());
+        }
+        return out.toString();
+    }
 
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		// TODO Auto-generated method stub
+    @Override
+    public View getView(Context context) {
+        TextView tv = new TextView(context);
+        tv.setText(ContentHtml.fromHtml(gatherText()));
+        tv.setLinksClickable(true);
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
+        return tv;
+    }
 
-	}
+    @Override
+    public int describeContents() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

@@ -13,63 +13,78 @@ import android.view.View;
 import com.tommykvant.wikivoyage.details.DestinationListActivity;
 
 public class UrlSpan extends ClickableSpan implements ParcelableSpan {
-	protected final String mURL;
+    protected final String mURL;
 
-	public UrlSpan(String url) {
-		mURL = url;
-	}
+    public UrlSpan(String url) {
+        mURL = url;
+    }
 
-	public UrlSpan(Parcel src) {
-		mURL = src.readString();
-	}
+    public UrlSpan(Parcel src) {
+        mURL = src.readString();
+    }
 
-	public int getSpanTypeId() {
-		return 1542187;
-	}
+    public int getSpanTypeId() {
+        return 1542187;
+    }
 
-	public int describeContents() {
-		return 0;
-	}
+    public int describeContents() {
+        return 0;
+    }
 
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(mURL);
-	}
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mURL);
+    }
 
-	public String getURL() {
-		return mURL;
-	}
+    public String getURL() {
+        return mURL;
+    }
 
-	@Override
-	public void updateDrawState(TextPaint ds) {
-		super.updateDrawState(ds);
-		ds.setUnderlineText(false);
-	}
+    @Override
+    public void updateDrawState(TextPaint ds) {
+        super.updateDrawState(ds);
+        ds.setUnderlineText(false);
+    }
 
-	@Override
-	public void onClick(View widget) {
-		if (mURL.startsWith("http") || mURL.startsWith("www")) {
-			System.out.println("Clicking link: " + getURL());
-			Uri uri = Uri.parse(getURL());
-			Context context = widget.getContext();
-			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-			intent.putExtra(Browser.EXTRA_APPLICATION_ID,
-					context.getPackageName());
-			context.startActivity(intent);
-		} else {
-			System.out.println("Clicking internal link: " + getURL());
-			Uri uri = Uri.parse(getURL());
-			Context context = widget.getContext();
+    @Override
+    public void onClick(View widget) {
+        Context context = widget.getContext();
+        if (mURL.startsWith("http") || mURL.startsWith("www")) {
+            System.out.println("Clicking link: " + getURL());
+            Uri uri = Uri.parse(getURL());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.putExtra(Browser.EXTRA_APPLICATION_ID,
+                    context.getPackageName());
+            context.startActivity(intent);
+        } else if (mURL.startsWith("mailto")) {
+            System.out.println("Clicking email: " + getURL() + " " + getURL().split(":")[1]);
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:"));
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{getURL().split(":")[1]});
+            if (intent.resolveActivity(context.getPackageManager()) != null) {
+                context.startActivity(intent);
+            }
 
-			Intent intent = new Intent(context, DestinationListActivity.class);
-			intent.putExtra(DestinationListActivity.DETAIL_PAGE_NAME, uri);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-					| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-			context.startActivity(intent);
+        } else if (mURL.startsWith("tel:")) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse(getURL()));
+            if (intent.resolveActivity(context.getPackageManager()) != null) {
+                context.startActivity(intent);
+            }
+        } else {
+            System.out.println("Clicking internal link: " + getURL());
+            Uri uri = Uri.parse(getURL());
 
-			// Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-			// intent.putExtra(Browser.EXTRA_APPLICATION_ID,
-			// context.getPackageName());
-			// context.startActivity(intent);
-		}
-	}
+
+            Intent intent = new Intent(context, DestinationListActivity.class);
+            intent.putExtra(DestinationListActivity.DETAIL_PAGE_NAME, uri);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            context.startActivity(intent);
+
+            // Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            // intent.putExtra(Browser.EXTRA_APPLICATION_ID,
+            // context.getPackageName());
+            // context.startActivity(intent);
+        }
+    }
 }
