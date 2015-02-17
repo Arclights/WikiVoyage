@@ -104,7 +104,7 @@ public class SearchResults extends ActionBarActivity {
 		TextView tv = (TextView) view.findViewById(android.R.id.text1);
 		System.out.println(tv.getText());
 		Intent intent = new Intent(this, DestinationListActivity.class);
-		intent.putExtra(DestinationListActivity.DETAIL_PAGE_NAME, tv.getText());
+        intent.putExtra(DestinationListActivity.DETAIL_PAGE_NAME, tv.getText());
 		startActivity(intent);
 	}
 

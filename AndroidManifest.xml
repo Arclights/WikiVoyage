@@ -17,8 +17,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".details.DestinationListActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTop" >
+            android:label="@string/app_name">
         </activity>
         <activity
             android:name=".details.DestinationDetailActivity"
@@ -27,7 +26,7 @@
             android:parentActivityName=".details.DestinationListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".DestinationListActivity" />
+                android:value=".details.DestinationListActivity" />
         </activity>
         <activity
             android:name=".MainPage"

@@ -27,7 +27,6 @@ public class Listing extends Template {
 
     protected void parse(String[] parts) {
         for (String p : parts) {
-            System.out.println("part: " + p);
             String[] params = p.split("=");
             if (params.length > 1 && !params[1].equals(" ")) {
                 switch (params[0].trim()) {

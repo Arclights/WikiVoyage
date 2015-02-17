@@ -72,19 +72,9 @@ public class UrlSpan extends ClickableSpan implements ParcelableSpan {
             }
         } else {
             System.out.println("Clicking internal link: " + getURL());
-            Uri uri = Uri.parse(getURL());
-
-
             Intent intent = new Intent(context, DestinationListActivity.class);
-            intent.putExtra(DestinationListActivity.DETAIL_PAGE_NAME, uri);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.putExtra(DestinationListActivity.DETAIL_PAGE_NAME, getURL());
             context.startActivity(intent);
-
-            // Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            // intent.putExtra(Browser.EXTRA_APPLICATION_ID,
-            // context.getPackageName());
-            // context.startActivity(intent);
         }
     }
 }
