@@ -11,16 +11,20 @@ public class TemplateFactory {
 
     public static Template getTemplate(String content) {
 //        String[] parts = content.substring(2, content.length() - 3).split("\\|");
-        String[] parts = split(content.substring(2, content.length() - 3), '|');
-        String type = parts[0];
+        ArrayList<String> parts = split(content.substring(2, content.length() - 3), '|');
+        String type = parts.get(0);
 
         switch (type) {
             case "do":
                 return new Do(parts);
             case "see":
                 return new See(parts);
+            case "buy":
+                return new Buy(parts);
             case "eat":
                 return new Eat(parts);
+            case "drink":
+                return new Drink(parts);
             case "sleep":
                 return new Sleep(parts);
             case "listing":
@@ -30,7 +34,7 @@ public class TemplateFactory {
         }
     }
 
-    private static String[] split(String string, char delim) {
+    private static ArrayList<String> split(String string, char delim) {
         ArrayList<String> parts = new ArrayList<>();
         int start = 0;
         int end = 0;
@@ -55,14 +59,7 @@ public class TemplateFactory {
             end++;
         }
         parts.add(string.substring(start, end));
-        System.out.println(parts);
 
-        String[] out = new String[parts.size()];
-        int i = 0;
-        for (String s : parts) {
-            out[i] = s;
-            i++;
-        }
-        return out;
+        return parts;
     }
 }

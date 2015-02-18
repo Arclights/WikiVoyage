@@ -44,7 +44,6 @@ public class TextContent extends Content {
         StringBuilder sb = new StringBuilder();
         sb.append(sIter.next());
         sb.append(sIter.next());
-        // Dummy for now
         do {
             while (sIter.hasNext()) {
                 if (sIter.peekNext2().equals("}}")) {

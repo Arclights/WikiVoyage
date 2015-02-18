@@ -99,7 +99,6 @@ public class DestinationListFragment extends ListFragment {
 			setActivatedPosition(savedInstanceState
 					.getInt(STATE_ACTIVATED_POSITION));
 		}
-
 	}
 
 	@Override
@@ -124,7 +123,6 @@ public class DestinationListFragment extends ListFragment {
 	}
 
 	public void setDetails(Details details) {
-		getActivity().setTitle(details.title);
 		detailsAdapter.updateDetails(details);
 		detailsAdapter.notifyDataSetChanged();
 	}

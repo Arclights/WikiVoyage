@@ -2,6 +2,8 @@ package com.tommykvant.wikivoyage.details.data.templates;
 
 import com.tommykvant.wikivoyage.creators.TextFormatter;
 
+import java.util.ArrayList;
+
 /**
  * Created by tommy on 2015-02-17.
  */
@@ -22,11 +24,11 @@ public class Listing extends Template {
     String price;
     String content;
 
-    public Listing(String[] parts) {
+    public Listing(ArrayList<String> parts) {
         super(parts);
     }
 
-    protected void parse(String[] parts) {
+    protected void parse(ArrayList<String> parts) {
         for (String p : parts) {
             String[] params = p.split("=");
             if (params.length > 1 && !params[1].equals(" ")) {

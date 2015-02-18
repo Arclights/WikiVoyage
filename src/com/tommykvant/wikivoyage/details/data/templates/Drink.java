@@ -5,9 +5,9 @@ import java.util.ArrayList;
 /**
  * Created by tommy on 2015-02-17.
  */
-public class Eat extends Listing {
+public class Drink extends Listing {
 
-    public Eat(ArrayList<String> parts) {
+    public Drink(ArrayList<String> parts) {
         super(parts);
     }
 }
