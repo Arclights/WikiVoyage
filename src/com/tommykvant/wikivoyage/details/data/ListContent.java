@@ -10,7 +10,7 @@ import com.tommykvant.wikivoyage.utils.Utils;
 
 import java.util.ArrayList;
 
-public class ListContent extends Content {
+public class ListContent implements Content {
 
 	ArrayList<Content> items;
 	int level;

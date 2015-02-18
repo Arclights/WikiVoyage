@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.view.View;
 import android.widget.TextView;
 
-public class HorizontalSpace extends Content{
+public class HorizontalSpace implements Content{
 
 	@Override
 	public int describeContents() {

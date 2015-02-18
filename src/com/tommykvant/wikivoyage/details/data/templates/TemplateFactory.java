@@ -11,7 +11,7 @@ public class TemplateFactory {
 
     public static Template getTemplate(String content) {
 //        String[] parts = content.substring(2, content.length() - 3).split("\\|");
-        ArrayList<String> parts = split(content.substring(2, content.length() - 3), '|');
+        ArrayList<String> parts = split(content.substring(2, content.length() - 2), '|');
         String type = parts.get(0);
 
         switch (type) {
@@ -29,6 +29,8 @@ public class TemplateFactory {
                 return new Sleep(parts);
             case "listing":
                 return new Listing(parts);
+            case "Regionlist":
+                return new RegionList(parts);
             default:
                 return new NullTemplate(parts);
         }
@@ -51,6 +53,9 @@ public class TemplateFactory {
                 iter.next();
                 end += 2;
                 inBrackets = false;
+            }
+            if(!iter.hasNext()){
+                break;
             }
             if (iter.next() == delim && !inBrackets) {
                 parts.add(string.substring(start, end));

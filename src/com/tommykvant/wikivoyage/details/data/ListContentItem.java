@@ -10,42 +10,44 @@ import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.parsers.LineIterator;
 import com.tommykvant.wikivoyage.utils.Utils;
 
-public class ListContentItem extends Content {
-	Content item;
+import java.util.ArrayList;
 
-	public ListContentItem(LineIterator iterator) {
-		this.item = new TextContent(iterator);
-	}
+public class ListContentItem implements Content {
+    Content item;
 
-	public View getView(Context context) {
-		RelativeLayout l = new RelativeLayout(context);
-		l.setPadding(Utils.dpsToPixels(context.getResources(), 5), 0, 0, 0);
+    public ListContentItem(LineIterator iterator, ArrayList<Content> sectionContent) {
+        this.item = new TextContent(iterator, sectionContent);
+    }
 
-		TextView bullet = new TextView(context);
-		bullet.setText("•");
-		bullet.setId(1542);
-		bullet.setPadding(0, 0, Utils.dpsToPixels(context.getResources(), 5), 0);
+    public View getView(Context context) {
+        RelativeLayout l = new RelativeLayout(context);
+        l.setPadding(Utils.dpsToPixels(context.getResources(), 5), 0, 0, 0);
 
-		l.addView(bullet);
+        TextView bullet = new TextView(context);
+        bullet.setText("•");
+        bullet.setId(1542);
+        bullet.setPadding(0, 0, Utils.dpsToPixels(context.getResources(), 5), 0);
 
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.WRAP_CONTENT,
-				RelativeLayout.LayoutParams.MATCH_PARENT);
-		lp.addRule(RelativeLayout.RIGHT_OF, bullet.getId());
-		l.addView(item.getView(context), lp);
+        l.addView(bullet);
 
-		return l;
-	}
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT);
+        lp.addRule(RelativeLayout.RIGHT_OF, bullet.getId());
+        l.addView(item.getView(context), lp);
 
-	@Override
-	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+        return l;
+    }
 
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		// TODO Auto-generated method stub
+    @Override
+    public int describeContents() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-	}
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        // TODO Auto-generated method stub
+
+    }
 }

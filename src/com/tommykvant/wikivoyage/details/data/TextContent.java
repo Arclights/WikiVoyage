@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.tommykvant.wikivoyage.creators.TextFormatter;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.ContentHtml;
+import com.tommykvant.wikivoyage.details.data.templates.RegionList;
 import com.tommykvant.wikivoyage.details.data.templates.Template;
 import com.tommykvant.wikivoyage.details.data.templates.TemplateFactory;
 import com.tommykvant.wikivoyage.parsers.LineIterator;
@@ -16,23 +17,23 @@ import com.tommykvant.wikivoyage.parsers.StringIterator;
 
 import java.util.ArrayList;
 
-public class TextContent extends Content {
+public class TextContent implements Content {
 
     ArrayList<TextContentContainer> text;
 
-    public TextContent(LineIterator iterator) {
+    public TextContent(LineIterator iterator, ArrayList<Content> sectionContent) {
         text = new ArrayList<>();
-        parseText(iterator);
+        parseText(iterator, sectionContent);
     }
 
-    private void parseText(LineIterator iterator) {
+    private void parseText(LineIterator iterator, ArrayList<Content> sectionContent) {
         StringBuilder textBuilder = new StringBuilder();
         StringBuilder template = new StringBuilder();
         StringIterator strIter;
         strIter = new StringIterator(iterator.next());
         while (strIter.hasNext()) {
             if (strIter.peekNext2().equals("{{")) {
-                strIter = parseTemplate(iterator, strIter);
+                parseTemplate(iterator, strIter, sectionContent);
             } else {
                 textBuilder.append(strIter.next());
             }
@@ -40,7 +41,7 @@ public class TextContent extends Content {
         text.add(new TextContentText(TextFormatter.format(textBuilder.toString())));
     }
 
-    private StringIterator parseTemplate(LineIterator lIter, StringIterator sIter) {
+    private void parseTemplate(LineIterator lIter, StringIterator sIter, ArrayList<Content> sectionContent) {
         StringBuilder sb = new StringBuilder();
         sb.append(sIter.next());
         sb.append(sIter.next());
@@ -50,8 +51,13 @@ public class TextContent extends Content {
                     sb.append(sIter.next());
                     sb.append(sIter.next());
                     System.out.println("Template: " + sb.toString());
-                    text.add(TemplateFactory.getTemplate(sb.toString()));
-                    return sIter;
+                    Template template = TemplateFactory.getTemplate(sb.toString());
+                    if (template instanceof RegionList) {
+                        sectionContent.add((Content) template);
+                    } else {
+                        text.add(template);
+                    }
+                    return;
                 }
                 sb.append(sIter.next());
             }
@@ -59,7 +65,6 @@ public class TextContent extends Content {
                 sIter = new StringIterator(lIter.next());
             }
         } while (lIter.hasNext());
-        return sIter;
     }
 
     private String gatherText() {

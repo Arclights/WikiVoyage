@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Parcelable;
 import android.view.View;
 
-public abstract class Content implements Parcelable {
+public interface Content extends Parcelable {
 
 	public abstract View getView(Context context);
 }
