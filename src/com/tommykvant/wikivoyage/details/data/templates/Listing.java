@@ -88,7 +88,7 @@ public class Listing extends Template {
         }
 
         if (address != null) {
-            out.append(", " + address);
+            out.append(", <img src=\"map\"/><a href=\"map:" + address + "\">" + address + "</a>");
         }
 
         if (phone != null) {

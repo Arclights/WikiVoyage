@@ -70,6 +70,12 @@ public class UrlSpan extends ClickableSpan implements ParcelableSpan {
             if (intent.resolveActivity(context.getPackageManager()) != null) {
                 context.startActivity(intent);
             }
+        } else if (mURL.startsWith("map:")) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("geo:0,0?q=" + getURL().split(":")[1].replace(' ', '+')));
+            if (intent.resolveActivity(context.getPackageManager()) != null) {
+                context.startActivity(intent);
+            }
         } else {
             System.out.println("Clicking internal link: " + getURL());
             Intent intent = new Intent(context, DestinationListActivity.class);

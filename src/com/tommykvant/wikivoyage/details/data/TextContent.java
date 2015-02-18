@@ -74,7 +74,7 @@ public class TextContent extends Content {
     @Override
     public View getView(Context context) {
         TextView tv = new TextView(context);
-        tv.setText(ContentHtml.fromHtml(gatherText()));
+        tv.setText(ContentHtml.fromHtml(gatherText(), context));
         tv.setLinksClickable(true);
         tv.setMovementMethod(LinkMovementMethod.getInstance());
         return tv;
