@@ -9,6 +9,7 @@ public class Listing extends Template {
 
     String name;
     String url;
+    String alt;
     String email;
     String address;
     double latitude;
@@ -35,6 +36,9 @@ public class Listing extends Template {
                         break;
                     case "url":
                         url = params[1].trim();
+                        break;
+                    case "alt":
+                        alt = params[1].trim();
                         break;
                     case "email":
                         email = params[1].trim();
@@ -81,6 +85,10 @@ public class Listing extends Template {
             out.append("<b><a href=\"" + url + "\"a>" + name + "</a></b> ");
         } else {
             out.append("<b>" + name + "</b> ");
+        }
+
+        if (alt != null) {
+            out.append("(").append(TextFormatter.format(alt)).append(") ");
         }
 
         if (directions != null) {
