@@ -15,5 +15,7 @@ public abstract class Template implements TextContentContainer {
         parse(parts);
     }
 
+    public Template(){}
+
     protected abstract void parse(ArrayList<String> parts);
 }

@@ -22,7 +22,6 @@
         <activity
             android:name=".details.DestinationDetailActivity"
             android:label="@string/title_section_detail"
-            android:launchMode="singleTop"
             android:parentActivityName=".details.DestinationListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

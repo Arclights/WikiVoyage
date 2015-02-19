@@ -1,6 +1,10 @@
 package com.tommykvant.wikivoyage.details.data.templates;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.tommykvant.wikivoyage.creators.TextFormatter;
+import com.tommykvant.wikivoyage.details.data.TextContentContainer;
 
 import java.util.ArrayList;
 
@@ -139,5 +143,56 @@ public class Listing extends Template {
         System.out.println("Template html: " + out.toString());
 
         return out.toString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(url);
+        dest.writeString(alt);
+        dest.writeString(email);
+        dest.writeString(address);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeString(directions);
+        dest.writeString(phone);
+        dest.writeString(tollfree);
+        dest.writeString(fax);
+        dest.writeString(hours);
+        dest.writeString(price);
+        dest.writeString(content);
+    }
+
+    public static final Parcelable.Creator<Listing> CREATOR
+            = new Parcelable.Creator<Listing>() {
+        public Listing createFromParcel(Parcel in) {
+            return new Listing(in);
+        }
+
+        public Listing[] newArray(int size) {
+            return new Listing[size];
+        }
+    };
+
+    private Listing(Parcel in) {
+        name = in.readString();
+        url = in.readString();
+        alt = in.readString();
+        email = in.readString();
+        address = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        directions = in.readString();
+        phone = in.readString();
+        tollfree = in.readString();
+        fax = in.readString();
+        hours = in.readString();
+        price = in.readString();
+        content = in.readString();
     }
 }

@@ -1,5 +1,8 @@
 package com.tommykvant.wikivoyage.details.data.templates;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -19,5 +22,29 @@ public class NullTemplate extends Template {
     @Override
     public String getContent() {
         return "";
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
+    public static final Parcelable.Creator<NullTemplate> CREATOR
+            = new Parcelable.Creator<NullTemplate>() {
+        public NullTemplate createFromParcel(Parcel in) {
+            return new NullTemplate(in);
+        }
+
+        public NullTemplate[] newArray(int size) {
+            return new NullTemplate[size];
+        }
+    };
+
+    public NullTemplate(Parcel in) {
     }
 }

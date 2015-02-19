@@ -2,6 +2,7 @@ package com.tommykvant.wikivoyage.details.data;
 
 import android.content.Context;
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
@@ -92,8 +93,23 @@ public class TextContent implements Content {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        // TODO Auto-generated method stub
+        dest.writeList(text);
+    }
 
+    public static final Parcelable.Creator<TextContent> CREATOR
+            = new Parcelable.Creator<TextContent>() {
+        public TextContent createFromParcel(Parcel in) {
+            return new TextContent(in);
+        }
+
+        public TextContent[] newArray(int size) {
+            return new TextContent[size];
+        }
+    };
+
+    private TextContent(Parcel in) {
+        text = new ArrayList<>();
+        in.readList(text, TextContentContainer.class.getClassLoader());
     }
 
 }

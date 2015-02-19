@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,14 +89,33 @@ public class RegionList extends Template implements Content {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeList(regions);
     }
 
-    private class Region implements Content {
+    public static final Parcelable.Creator<RegionList> CREATOR
+            = new Parcelable.Creator<RegionList>() {
+        public RegionList createFromParcel(Parcel in) {
+            return new RegionList(in);
+        }
+
+        public RegionList[] newArray(int size) {
+            return new RegionList[size];
+        }
+    };
+
+    public RegionList(Parcel in) {
+        regions = new ArrayList<>();
+        in.readList(regions, Region.class.getClassLoader());
+    }
+
+    private static class Region implements Content {
         String name;
         int color;
         String items;
         String description;
+
+        public Region() {
+        }
 
         private String getText() {
             StringBuilder out = new StringBuilder();
@@ -162,7 +182,28 @@ public class RegionList extends Template implements Content {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(name);
+            dest.writeInt(color);
+            dest.writeString(items);
+            dest.writeString(description);
+        }
 
+        public static final Parcelable.Creator<Region> CREATOR
+                = new Parcelable.Creator<Region>() {
+            public Region createFromParcel(Parcel in) {
+                return new Region(in);
+            }
+
+            public Region[] newArray(int size) {
+                return new Region[size];
+            }
+        };
+
+        public Region(Parcel in) {
+            name = in.readString();
+            color = in.readInt();
+            items = in.readString();
+            description = in.readString();
         }
 
         @Override

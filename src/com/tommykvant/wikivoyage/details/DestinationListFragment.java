@@ -99,6 +99,7 @@ public class DestinationListFragment extends ListFragment {
 			setActivatedPosition(savedInstanceState
 					.getInt(STATE_ACTIVATED_POSITION));
 		}
+
 	}
 
 	@Override

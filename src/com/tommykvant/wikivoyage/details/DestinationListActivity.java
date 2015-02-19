@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
@@ -28,125 +29,133 @@ import java.net.URISyntaxException;
  * {@link DestinationDetailActivity} representing item details. On tablets, the
  * activity presents the list of items and item details side-by-side using two
  * vertical panes.
- * <p>
+ * <p/>
  * The activity makes heavy use of fragments. The list of items is a
  * {@link DestinationListFragment} and the item details (if present) is a
  * {@link DestinationDetailFragment}.
- * <p>
+ * <p/>
  * This activity also implements the required
  * {@link DestinationListFragment.Callbacks} interface to listen for item
  * selections.
  */
 public class DestinationListActivity extends ActionBarActivity implements
-		DestinationListFragment.Callbacks {
+        DestinationListFragment.Callbacks {
 
-	public static final String DETAIL_PAGE_NAME = "com.tommykvant.wikivoyage.detailPageName";
-	public static final String DETAIL_DETAILS = "com.tommykvant.wikivoyage.details";
+    public static final String DETAIL_PAGE_NAME = "com.tommykvant.wikivoyage.detailPageName";
+    public static final String DETAIL_DETAILS = "com.tommykvant.wikivoyage.details";
 
-	/**
-	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-	 * device.
-	 */
-	private boolean mTwoPane;
+    /**
+     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
+     * device.
+     */
+    private boolean mTwoPane;
 
-	private String pageName;
-	private Details details;
+    private String pageName;
+    private Details details;
 
-	@SuppressLint("NewApi")
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_section_list);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_section_list);
 
-		if (findViewById(R.id.section_detail_container) != null) {
-			// The detail container view will be present only in the
-			// large-screen layouts (res/values-large and
-			// res/values-sw600dp). If this view is present, then the
-			// activity should be in two-pane mode.
-			mTwoPane = true;
+        if (findViewById(R.id.section_detail_container) != null) {
+            // The detail container view will be present only in the
+            // large-screen layouts (res/values-large and
+            // res/values-sw600dp). If this view is present, then the
+            // activity should be in two-pane mode.
+            mTwoPane = true;
 
-			// In two-pane mode, list items should be given the
-			// 'activated' state when touched.
-			((DestinationListFragment) getSupportFragmentManager()
-					.findFragmentById(R.id.section_list))
-					.setActivateOnItemClick(true);
-		}
+            // In two-pane mode, list items should be given the
+            // 'activated' state when touched.
+            ((DestinationListFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.section_list))
+                    .setActivateOnItemClick(true);
+        }
 
-		pageName = getIntent().getExtras().getString(DETAIL_PAGE_NAME);
-		Log.d("DestinationListActivity.onCreate", "Starting an activity for "+pageName);
-		new DetailLoader().execute(pageName);
-		setTitle(pageName);
-	}
+        pageName = getIntent().getExtras().getString(DETAIL_PAGE_NAME);
+        Log.d("DestinationListActivity.onCreate", "Starting an activity for " + pageName);
+        new DetailLoader().execute(pageName);
+        setTitle(pageName);
+    }
 
-	private class DetailLoader extends AsyncTask<String, Void, Details> {
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        System.out.println("Saving list activity");
+        outState.putString(DETAIL_PAGE_NAME, pageName);
+        outState.putParcelable(DETAIL_DETAILS, details);
+    }
 
-		@Override
-		protected Details doInBackground(String... params) {
-			String page = params[0];
-			URI uri = null;
-			try {
-				uri = UriGenerator.generateDetailURI(page);
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			String result = WebFetcher.fetch(uri);
-            System.out.println("result: "+result);
-			Details d = null;
-			try {
-				d = DetailParser.parse(result, page);
+    private class DetailLoader extends AsyncTask<String, Void, Details> {
+
+        @Override
+        protected Details doInBackground(String... params) {
+            String page = params[0];
+            URI uri = null;
+            try {
+                uri = UriGenerator.generateDetailURI(page);
+            } catch (URISyntaxException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            String result = WebFetcher.fetch(uri);
+            System.out.println("result: " + result);
+            Details d = null;
+            try {
+                d = DetailParser.parse(result, page);
             } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return d;
-		}
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return d;
+        }
 
-		@Override
-		protected void onPostExecute(Details result) {
-			details = result;
-			sendDetailsToFragment();
-		}
+        @Override
+        protected void onPostExecute(Details result) {
+            details = result;
+            sendDetailsToFragment();
+        }
 
-	}
+    }
 
-	private void sendDetailsToFragment() {
-		((DestinationListFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.section_list)).setDetails(details);
-	}
+    private void sendDetailsToFragment() {
+        ((DestinationListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.section_list)).setDetails(details);
+    }
 
-	/**
-	 * Callback method from {@link DestinationListFragment.Callbacks} indicating
-	 * that the item with the given ID was selected.
-	 */
-	@Override
-	public void onItemSelected(Section section) {
-		if (mTwoPane) {
-			// In two-pane mode, show the detail view in this activity by
-			// adding or replacing the detail fragment using a
-			// fragment transaction.
-			Bundle arguments = new Bundle();
-			arguments.putParcelable(DestinationDetailFragment.ARG_SECTION,
-					section);
-			DestinationDetailFragment fragment = new DestinationDetailFragment();
-			fragment.setArguments(arguments);
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.section_detail_container, fragment).commit();
+    /**
+     * Callback method from {@link DestinationListFragment.Callbacks} indicating
+     * that the item with the given ID was selected.
+     */
+    @Override
+    public void onItemSelected(Section section) {
+        if (mTwoPane) {
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(DestinationDetailFragment.ARG_SECTION,
+                    section);
+            DestinationDetailFragment fragment = new DestinationDetailFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.section_detail_container, fragment).commit();
 
-		} else {
-			// In single-pane mode, simply start the detail activity
-			// for the selected item ID.
-			Intent detailIntent = new Intent(this,
-					DestinationDetailActivity.class);
-			detailIntent.putExtra(DestinationDetailFragment.ARG_SECTION,
-					section);
-			startActivity(detailIntent);
-		}
-	}
+        } else {
+            // In single-pane mode, simply start the detail activity
+            // for the selected item ID.
+            Intent detailIntent = new Intent(this,
+                    DestinationDetailActivity.class);
+            detailIntent.putExtra(DestinationDetailFragment.ARG_SECTION,
+                    section);
+            detailIntent.putExtra(DETAIL_PAGE_NAME,pageName);
+            startActivity(detailIntent);
+        }
+    }
 }

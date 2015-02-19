@@ -2,6 +2,7 @@ package com.tommykvant.wikivoyage.details.data;
 
 import android.content.Context;
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ public class ListContentItem implements Content {
 
         TextView bullet = new TextView(context);
         bullet.setText("•");
-        bullet.setId(1542);
+//        bullet.setId(1542);
         bullet.setPadding(0, 0, Utils.dpsToPixels(context.getResources(), 5), 0);
 
         l.addView(bullet);
@@ -47,7 +48,21 @@ public class ListContentItem implements Content {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        // TODO Auto-generated method stub
+        dest.writeParcelable(item, 0);
+    }
 
+    public static final Parcelable.Creator<ListContentItem> CREATOR
+            = new Parcelable.Creator<ListContentItem>() {
+        public ListContentItem createFromParcel(Parcel in) {
+            return new ListContentItem(in);
+        }
+
+        public ListContentItem[] newArray(int size) {
+            return new ListContentItem[size];
+        }
+    };
+
+    private ListContentItem(Parcel in) {
+        item = in.readParcelable(Content.class.getClassLoader());
     }
 }
