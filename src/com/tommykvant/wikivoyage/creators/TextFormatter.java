@@ -31,6 +31,8 @@ public class TextFormatter {
         text = text.replaceAll("^:+", "");
         // Handle forecastNOAA nested template
         text = text.replaceAll("\\{\\{forecastNOAA\\|([\\w\\s]+?)\\|([\\-\\d.]+?)\\|([\\-\\d.]+?)\\}\\}", "<a href=\"http://forecast.weather.gov/MapClick.php?textField1=$2&textField2=$3\">See $1's 7 day forecast</a>");
+        // Handle nested IATA template
+        text = text.replaceAll("\\{\\{IATA\\|(\\w+)\\}\\}", "<a href=\"https://en.wikipedia.org/wiki/IATA_code\">IATA</a>: <b>$1</b>");
 
         return text;
     }

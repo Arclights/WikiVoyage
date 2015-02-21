@@ -35,6 +35,8 @@ public class TextContent implements Content {
         strIter = new StringIterator(iterator.next());
         while (strIter.hasNext()) {
             if (strIter.peekNext2().equals("{{")) {
+                text.add(new TextContentText(TextFormatter.format(textBuilder.toString())));
+                textBuilder = new StringBuilder();
                 parseTemplate(iterator, strIter, sectionContent);
             } else {
                 textBuilder.append(strIter.next());

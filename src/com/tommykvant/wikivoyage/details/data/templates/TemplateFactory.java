@@ -37,6 +37,8 @@ public class TemplateFactory {
                 return new Flag(parts);
             case "Climate":
                 return new Climate(parts);
+            case "IATA":
+                return new IATA(parts);
             default:
                 Log.e("TemplateFactory", "Unknown template: " + type);
                 return new NullTemplate(parts);

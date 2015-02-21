@@ -7,13 +7,19 @@ import android.os.Parcelable;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
+import com.tommykvant.wikivoyage.R;
 import com.tommykvant.wikivoyage.creators.TextFormatter;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.ContentHtml;
@@ -65,12 +71,9 @@ public class Climate extends Template implements Content {
                     description = params[1];
                     break;
                 default:
-                    System.out.println("Into defualt: " + params[0].trim());
                     if (params[0].trim().endsWith("precip")) {
-                        System.out.println("precip");
                         values.put(params[0].trim(), new Length(params[1].trim(), unit));
                     } else if (params[0].trim().endsWith("low") || params[0].trim().endsWith("high")) {
-                        System.out.println("high/low");
                         values.put(params[0].trim(), new Degrees(params[1].trim(), unit));
                     }
                     break;
@@ -90,7 +93,8 @@ public class Climate extends Template implements Content {
         out.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         out.setFillViewport(true);
 
-        LinearLayout border=new LinearLayout(context);
+        // The outside border
+        LinearLayout border = new LinearLayout(context);
         border.setBackgroundColor(Color.parseColor("#9EBDC7"));
         border.setPadding(2, 2, 2, 2);
 
@@ -101,6 +105,7 @@ public class Climate extends Template implements Content {
         ll.setPadding(10, 10, 10, 10);
         ll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
+        // The table
         TableLayout table = new TableLayout(context);
         table.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
@@ -387,11 +392,11 @@ public class Climate extends Template implements Content {
         }
 
         private double mm2inch(double mm) {
-            return Double.valueOf(twoDForm.format(mm * 25.4));
+            return Double.valueOf(twoDForm.format(mm / 25.4));
         }
 
         private double inch2mm(double inch) {
-            return Double.valueOf(twoDForm.format(inch / 25.4));
+            return Double.valueOf(twoDForm.format(inch * 25.4));
         }
 
         @Override
