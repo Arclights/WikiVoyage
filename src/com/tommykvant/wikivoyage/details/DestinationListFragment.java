@@ -199,7 +199,7 @@ public class DestinationListFragment extends ListFragment {
 			TextView text = ((TextView) convertView
 					.findViewById(android.R.id.text1));
 			Header header = details.getSection(position).header;
-			text.setText(header.toString());
+			text.setText(header.toStringForList());
 			text.setPadding(header.getLeftPadding(getResources()), 0, 0, 0);
 
 			return convertView;
