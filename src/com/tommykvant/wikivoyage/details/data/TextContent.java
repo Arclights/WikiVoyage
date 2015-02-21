@@ -44,11 +44,12 @@ public class TextContent implements Content {
 
     private void parseTemplate(LineIterator lIter, StringIterator sIter, ArrayList<Content> sectionContent) {
         StringBuilder sb = new StringBuilder();
+        int depth = 0;
         sb.append(sIter.next());
         sb.append(sIter.next());
         do {
             while (sIter.hasNext()) {
-                if (sIter.peekNext2().equals("}}")) {
+                if (sIter.peekNext2().equals("}}") && depth == 0) {
                     sb.append(sIter.next());
                     sb.append(sIter.next());
                     System.out.println("Template: " + sb.toString());
@@ -59,6 +60,10 @@ public class TextContent implements Content {
                         text.add(template);
                     }
                     return;
+                } else if (sIter.peekNext2().equals("{{")) {
+                    depth++;
+                } else if (sIter.peekNext2().equals("}}")) {
+                    depth--;
                 }
                 sb.append(sIter.next());
             }

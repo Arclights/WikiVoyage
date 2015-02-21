@@ -46,6 +46,7 @@ public class TemplateFactory {
         int start = 0;
         int end = 0;
         boolean inBrackets = false;
+        boolean inCurlBrackets = false;
         StringIterator iter = new StringIterator(string);
         while (iter.hasNext()) {
             if (iter.peekNext2().equals("[[")) {
@@ -58,11 +59,21 @@ public class TemplateFactory {
                 iter.next();
                 end += 2;
                 inBrackets = false;
+            } else if (iter.peekNext2().equals("{{")) {
+                iter.next();
+                iter.next();
+                end += 2;
+                inCurlBrackets = true;
+            } else if (iter.peekNext2().equals("}}")) {
+                iter.next();
+                iter.next();
+                end += 2;
+                inCurlBrackets = false;
             }
             if (!iter.hasNext()) {
                 break;
             }
-            if (iter.next() == delim && !inBrackets) {
+            if (iter.next() == delim && !inBrackets && !inCurlBrackets) {
                 parts.add(string.substring(start, end));
                 start = end + 1;
             }

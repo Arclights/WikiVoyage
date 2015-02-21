@@ -97,16 +97,20 @@ public class Listing extends Template {
             out.append("(").append(TextFormatter.format(alt)).append(") ");
         }
 
-        if (directions != null) {
-            out.append("(<i>" + directions + "</i>)");
+        if (address != null || directions != null) {
+            out.append(", ");
+            if (address != null) {
+                out.append("<img src=\"map\"/>&nbsp;<a href=\"map:" + address + "\">" + address + "</a>");
+            }
+
+            if (directions != null) {
+                out.append("(<i>" + directions + "</i>)");
+            }
         }
 
-        if (address != null) {
-            out.append(", <img src=\"map\"/><a href=\"map:" + address + "\">" + address + "</a>");
-        }
 
         if (phone != null) {
-            out.append(", ☎ <a href=\"tel:" + phone + "\">" + phone + "</a>");
+            out.append(", ☎&nbsp;<a href=\"tel:" + phone + "\">" + phone + "</a>");
         }
 
         if (fax != null) {
@@ -114,7 +118,7 @@ public class Listing extends Template {
         }
 
         if (email != null) {
-            out.append(", email: <a href=\"mailto:" + email + "\">" + email + "</a>");
+            out.append(", <b>@</b>&nbsp;<a href=\"mailto:" + email + "\">" + email + "</a>");
         }
 
         out.append(".");
