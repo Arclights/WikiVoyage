@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
@@ -170,8 +171,10 @@ public class Climate extends Template implements Content {
         ll.addView(getDivider(context));
 
         TextView tv = new TextView(context);
+        System.out.println(TextFormatter.format(description));
         tv.setText(ContentHtml.fromHtml(TextFormatter.format(description), context));
         tv.setLinksClickable(true);
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
         ll.addView(tv);
 
         border.addView(ll);
