@@ -35,6 +35,8 @@ public class TemplateFactory {
                 return new RegionList(parts);
             case "flag":
                 return new Flag(parts);
+            case "Climate":
+                return new Climate(parts);
             default:
                 Log.e("TemplateFactory", "Unknown template: " + type);
                 return new NullTemplate(parts);

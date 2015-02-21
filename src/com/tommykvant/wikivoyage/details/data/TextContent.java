@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.tommykvant.wikivoyage.creators.TextFormatter;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.ContentHtml;
+import com.tommykvant.wikivoyage.details.data.templates.Climate;
 import com.tommykvant.wikivoyage.details.data.templates.RegionList;
 import com.tommykvant.wikivoyage.details.data.templates.Template;
 import com.tommykvant.wikivoyage.details.data.templates.TemplateFactory;
@@ -54,7 +55,7 @@ public class TextContent implements Content {
                     sb.append(sIter.next());
                     System.out.println("Template: " + sb.toString());
                     Template template = TemplateFactory.getTemplate(sb.toString());
-                    if (template instanceof RegionList) {
+                    if (template instanceof RegionList || template instanceof Climate) {
                         sectionContent.add((Content) template);
                     } else {
                         text.add(template);

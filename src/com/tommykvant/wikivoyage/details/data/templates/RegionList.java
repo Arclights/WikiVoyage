@@ -44,7 +44,6 @@ public class RegionList extends Template implements Content {
             if (params.length > 1 && !params[1].equals(" ")) {
                 String key = params[0].trim();
                 if (namePattern.matcher(key).matches()) {
-                    System.out.println(key);
                     if (r != null) {
                         regions.add(r);
                     }
@@ -62,7 +61,6 @@ public class RegionList extends Template implements Content {
         if (r != null) {
             regions.add(r);
         }
-        System.out.println(regions);
     }
 
     @Override
