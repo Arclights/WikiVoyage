@@ -417,6 +417,9 @@ class HtmlToSpannedConverter implements ContentHandler {
         int id;
         if (src.startsWith("flag:")) {
             id = context.getResources().getIdentifier("drawable/" + src.split(":")[1], null, context.getPackageName());
+            if(id==0){
+                id = R.drawable.ic_action_picture;
+            }
         } else if (src.equals("map")) {
             id = R.drawable.ic_action_place;
         } else {
