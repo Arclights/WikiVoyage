@@ -1,5 +1,7 @@
 package com.tommykvant.wikivoyage.details.data.templates;
 
+import android.util.Log;
+
 import com.tommykvant.wikivoyage.parsers.StringIterator;
 
 import java.util.ArrayList;
@@ -31,7 +33,10 @@ public class TemplateFactory {
                 return new Listing(parts);
             case "Regionlist":
                 return new RegionList(parts);
+            case "flag":
+                return new Flag(parts);
             default:
+                Log.e("TemplateFactory", "Unknown template: " + type);
                 return new NullTemplate(parts);
         }
     }
@@ -54,7 +59,7 @@ public class TemplateFactory {
                 end += 2;
                 inBrackets = false;
             }
-            if(!iter.hasNext()){
+            if (!iter.hasNext()) {
                 break;
             }
             if (iter.next() == delim && !inBrackets) {

@@ -26,7 +26,7 @@ public class ListContentItem implements Content {
 
         TextView bullet = new TextView(context);
         bullet.setText("•");
-//        bullet.setId(1542);
+        bullet.setId(1542);
         bullet.setPadding(0, 0, Utils.dpsToPixels(context.getResources(), 5), 0);
 
         l.addView(bullet);

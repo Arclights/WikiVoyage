@@ -3,7 +3,10 @@ package com.tommykvant.wikivoyage.details.content;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.Spannable;
@@ -20,10 +23,14 @@ import android.text.style.SuperscriptSpan;
 import android.text.style.TextAppearanceSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 
 import com.tommykvant.wikivoyage.R;
 import com.tommykvant.wikivoyage.details.content.ContentHtml.TagHandler;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.ccil.cowan.tagsoup.HTMLSchema;
 import org.ccil.cowan.tagsoup.Parser;
 import org.xml.sax.Attributes;
@@ -34,7 +41,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
+import java.net.URI;
 
 /**
  * This class processes HTML strings into displayable styled text. Not all HTML
@@ -406,14 +415,15 @@ class HtmlToSpannedConverter implements ContentHandler {
         Drawable d = null;
 
         int id;
-
-        if (src.equals("map")) {
+        if (src.startsWith("flag:")) {
+            id = context.getResources().getIdentifier("drawable/" + src.split(":")[1], null, context.getPackageName());
+        } else if (src.equals("map")) {
             id = R.drawable.ic_action_place;
         } else {
             id = R.drawable.ic_action_picture;
         }
         d = context.getResources().getDrawable(id);
-        d.setBounds(0, 0, d.getIntrinsicWidth()/2, d.getIntrinsicHeight()/2);
+        d.setBounds(0, 0, d.getIntrinsicWidth() / 2, d.getIntrinsicHeight() / 2);
 
         int len = text.length();
         text.append("\uFFFC");
@@ -421,6 +431,21 @@ class HtmlToSpannedConverter implements ContentHandler {
         text.setSpan(new ImageSpan(d, src), len, text.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+    }
+
+    private static BitmapDrawable downloadThumbnail(String url, Context context) {
+        Log.d("HtmlToSpannedConverter", "Bitmap: " + url);
+        DefaultHttpClient client = new DefaultHttpClient();
+        BitmapDrawable out = null;
+        try {
+            HttpGet httpGet = new HttpGet(new URI(url));
+            HttpResponse execute = client.execute(httpGet);
+            InputStream content = execute.getEntity().getContent();
+            out = new BitmapDrawable(context.getResources(), content);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return out;
     }
 
 
