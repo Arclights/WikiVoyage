@@ -29,7 +29,7 @@ public class ImageFetcher {
         DefaultHttpClient client = new DefaultHttpClient();
         Image out = new Image();
         try {
-            HttpGet httpGet = new HttpGet(new URI(urlBase + image + "&thumbwidth=" + width + "&thumbheight=" + height));
+            HttpGet httpGet = new HttpGet(new URI(urlBase + replaceChars(image) + "&thumbwidth=" + width + "&thumbheight=" + height));
             HttpResponse execute = client.execute(httpGet);
             InputStream content = execute.getEntity().getContent();
             SAXParserFactory parserFactor = SAXParserFactory.newInstance();
@@ -41,6 +41,10 @@ public class ImageFetcher {
         }
         System.out.println("ImageFetcher: " + out);
         return out;
+    }
+
+    private static String replaceChars(String in) {
+        return in.replace(' ', '_');
     }
 
 

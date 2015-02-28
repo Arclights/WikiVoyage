@@ -24,6 +24,8 @@ import com.tommykvant.wikivoyage.creators.TextFormatter;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.ContentHtml;
 
+import org.w3c.dom.Text;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -178,8 +180,7 @@ public class Climate extends Template implements Content {
         TextView tv = new TextView(context);
         System.out.println(TextFormatter.format(description));
         tv.setText(ContentHtml.fromHtml(TextFormatter.format(description), context));
-        tv.setLinksClickable(true);
-        tv.setMovementMethod(LinkMovementMethod.getInstance());
+        TextFormatter.makeTextViewLinkFriendly(tv);
         ll.addView(tv);
 
         border.addView(ll);

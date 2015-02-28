@@ -144,8 +144,6 @@ public class Listing extends Template {
             }
         }
 
-        System.out.println("Template html: " + out.toString());
-
         return out.toString();
     }
 

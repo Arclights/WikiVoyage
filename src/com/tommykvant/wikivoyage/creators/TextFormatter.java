@@ -1,6 +1,9 @@
 package com.tommykvant.wikivoyage.creators;
 
 
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
+
 public class TextFormatter {
     public static String format(String text) {
         // Bold
@@ -22,7 +25,7 @@ public class TextFormatter {
         text = text.replaceAll("(?<!\\[)\\[([^ \\[]+?) (.+?)\\]",
                 "<a href=\"$1\">$2</a>");
         // Skip images
-        text = text.replaceAll("\\[\\[Image.+?\\]\\]", "");
+        text = text.replaceAll("\\[\\[Image:(\\w+)\\.\\w+(?:\\|.*)?\\]\\]", "<img src=$1>");
         // Skip files
         text = text.replaceAll("\\[\\[File.+?\\]\\]", "");
         // Remove list markup
@@ -35,5 +38,10 @@ public class TextFormatter {
         text = text.replaceAll("\\{\\{IATA\\|(\\w+)\\}\\}", "<a href=\"https://en.wikipedia.org/wiki/IATA_code\">IATA</a>: <b>$1</b>");
 
         return text;
+    }
+
+    public static void makeTextViewLinkFriendly(TextView tv) {
+        tv.setLinksClickable(true);
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

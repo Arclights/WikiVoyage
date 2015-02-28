@@ -1,8 +1,13 @@
 package com.tommykvant.wikivoyage.details.data;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.tommykvant.wikivoyage.MainPage;
 
 import java.util.ArrayList;
 
@@ -28,6 +33,10 @@ public class Image implements Parcelable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Bitmap getImage() {
+        return image;
     }
 
     public String inline() {
@@ -59,5 +68,10 @@ public class Image implements Parcelable {
     private Image(Parcel in) {
         image = in.readParcelable(Bitmap.class.getClassLoader());
         author = in.readString();
+    }
+
+    public static float getIconSizeForDevice() {
+        float density = Resources.getSystem().getDisplayMetrics().density;
+        return Math.round((float) 32 * density);
     }
 }

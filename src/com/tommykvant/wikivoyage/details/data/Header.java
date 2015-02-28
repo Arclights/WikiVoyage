@@ -64,8 +64,7 @@ public class Header implements Parcelable {
         tv.setText(ContentHtml.fromHtml(text, context));
         tv.setTextSize(Utils.spToPixels(context.getResources(), 16));
         tv.setTypeface(null, Typeface.BOLD);
-        tv.setLinksClickable(true);
-        tv.setMovementMethod(LinkMovementMethod.getInstance());
+        TextFormatter.makeTextViewLinkFriendly(tv);
         return tv;
     }
 }

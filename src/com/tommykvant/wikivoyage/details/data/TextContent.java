@@ -12,6 +12,7 @@ import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.content.ContentHtml;
 import com.tommykvant.wikivoyage.details.data.templates.Climate;
 import com.tommykvant.wikivoyage.details.data.templates.RegionList;
+import com.tommykvant.wikivoyage.details.data.templates.RouteBox;
 import com.tommykvant.wikivoyage.details.data.templates.Template;
 import com.tommykvant.wikivoyage.details.data.templates.TemplateFactory;
 import com.tommykvant.wikivoyage.parsers.LineIterator;
@@ -57,7 +58,7 @@ public class TextContent implements Content {
                     sb.append(sIter.next());
                     System.out.println("Template: " + sb.toString());
                     Template template = TemplateFactory.getTemplate(sb.toString());
-                    if (template instanceof RegionList || template instanceof Climate) {
+                    if (template instanceof RegionList || template instanceof Climate || template instanceof RouteBox) {
                         sectionContent.add((Content) template);
                     } else {
                         text.add(template);
@@ -88,8 +89,7 @@ public class TextContent implements Content {
     public View getView(Context context) {
         TextView tv = new TextView(context);
         tv.setText(ContentHtml.fromHtml(gatherText(), context));
-        tv.setLinksClickable(true);
-        tv.setMovementMethod(LinkMovementMethod.getInstance());
+        TextFormatter.makeTextViewLinkFriendly(tv);
         return tv;
     }
 

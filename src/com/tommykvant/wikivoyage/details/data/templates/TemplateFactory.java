@@ -40,6 +40,9 @@ public class TemplateFactory {
             case "IATA":
                 return new IATA(parts);
             default:
+                if (type.startsWith("routebox")) {
+                    return new RouteBox(parts);
+                }
                 Log.e("TemplateFactory", "Unknown template: " + type);
                 return new NullTemplate(parts);
         }

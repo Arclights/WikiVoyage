@@ -147,8 +147,7 @@ public class RegionList extends Template implements Content {
 
             TextView tv = new TextView(context);
             tv.setText(ContentHtml.fromHtml(getText(), context));
-            tv.setLinksClickable(true);
-            tv.setMovementMethod(LinkMovementMethod.getInstance());
+            TextFormatter.makeTextViewLinkFriendly(tv);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             lp.setMargins(10, 0, 0, 0);
             tv.setLayoutParams(lp);
