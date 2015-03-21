@@ -5,7 +5,6 @@ import com.tommykvant.wikivoyage.details.data.Header;
 import com.tommykvant.wikivoyage.details.data.Section;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -13,17 +12,15 @@ public class DetailParser {
 
     public static Details parse(String toParse, String title)
             throws IOException, JSONException {
-//        String content = new JSONObject(toParse).getJSONObject("parse")
-//                .getJSONObject("wikitext").getString("*");
         String content = extractWikiText(toParse, title);
-        LineIterator iterator = new LineIterator(content);
+        StringIterator iterator = new StringIterator(content);
         Details d = new Details(title);
         parseSections(d, iterator);
 
         return d;
     }
 
-    private static void parseSections(Details details, LineIterator iterator) {
+    private static void parseSections(Details details, StringIterator iterator) {
         Header header = new Header("Intro", 2);
         while (true) {
             details.addSection(new Section(header, ContentParser
@@ -35,11 +32,22 @@ public class DetailParser {
         }
     }
 
-    private static Header parseHeader(LineIterator iterator) {
-        String line = iterator.next();
-        int headerCounter = countChars(line, 0, '=');
-        String headerText = line.split(multipleChars('=', headerCounter))[1];
-        return new Header(headerText, headerCounter);
+    private static Header parseHeader(StringIterator iterator) {
+        int headerCounter = 0;
+        while (iterator.peekNext() == '=') {
+            iterator.next();
+            headerCounter++;
+        }
+        StringBuilder headerText = new StringBuilder();
+        while (iterator.peekNext() != '=') {
+            headerText.append(iterator.next());
+        }
+        int i = headerCounter;
+        while (i > 0) {
+            iterator.next();
+            i--;
+        }
+        return new Header(headerText.toString(), headerCounter);
     }
 
     private static int countChars(String line, int fromPos, char charToCount) {

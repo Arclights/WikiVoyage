@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.parsers.LineIterator;
+import com.tommykvant.wikivoyage.parsers.StringIterator;
 import com.tommykvant.wikivoyage.utils.Utils;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 public class ListContentItem implements Content {
     Content item;
 
-    public ListContentItem(LineIterator iterator, ArrayList<Content> sectionContent) {
+    public ListContentItem(StringIterator iterator, ArrayList<Content> sectionContent) {
         this.item = new TextContent(iterator, sectionContent);
     }
 

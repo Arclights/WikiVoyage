@@ -6,13 +6,14 @@ import android.widget.TextView;
 
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.parsers.LineIterator;
+import com.tommykvant.wikivoyage.parsers.StringIterator;
 import com.tommykvant.wikivoyage.utils.Utils;
 
 import java.util.ArrayList;
 
 public class IndentedTextContent extends TextContent {
 
-    public IndentedTextContent(LineIterator iterator, ArrayList<Content> sectionContent) {
+    public IndentedTextContent(StringIterator iterator, ArrayList<Content> sectionContent) {
         super(iterator, sectionContent);
     }
 

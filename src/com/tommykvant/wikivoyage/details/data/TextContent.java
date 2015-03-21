@@ -14,7 +14,6 @@ import com.tommykvant.wikivoyage.details.data.templates.RegionList;
 import com.tommykvant.wikivoyage.details.data.templates.RouteBox;
 import com.tommykvant.wikivoyage.details.data.templates.Template;
 import com.tommykvant.wikivoyage.details.data.templates.TemplateFactory;
-import com.tommykvant.wikivoyage.parsers.LineIterator;
 import com.tommykvant.wikivoyage.parsers.StringIterator;
 
 import java.util.ArrayList;
@@ -23,57 +22,56 @@ public class TextContent implements Content {
 
     ArrayList<TextContentContainer> text;
 
-    public TextContent(LineIterator iterator, ArrayList<Content> sectionContent) {
+    public TextContent(StringIterator iterator, ArrayList<Content> sectionContent) {
         text = new ArrayList<>();
         parseText(iterator, sectionContent);
     }
 
-    private void parseText(LineIterator iterator, ArrayList<Content> sectionContent) {
+    private void parseText(StringIterator iter, ArrayList<Content> sectionContent) {
         StringBuilder textBuilder = new StringBuilder();
-        StringBuilder template = new StringBuilder();
-        StringIterator strIter;
-        strIter = new StringIterator(iterator.next());
-        while (strIter.hasNext()) {
-            if (strIter.next2IsStartOfTemplate()) {
+        while (iter.hasNext() && iter.peekNext() != '\n') {
+            if (iter.isAtStartOfTemplate()) {
                 text.add(new TextContentText(TextFormatter.format(textBuilder.toString())));
                 textBuilder = new StringBuilder();
-                parseTemplate(iterator, strIter, sectionContent);
+                parseTemplate(iter, sectionContent);
             } else {
-                textBuilder.append(strIter.next());
+                textBuilder.append(iter.next());
             }
+        }
+        if (iter.hasNext() && iter.peekNext() == '\n') {
+            iter.next();
         }
         text.add(new TextContentText(TextFormatter.format(textBuilder.toString())));
     }
 
-    private void parseTemplate(LineIterator lIter, StringIterator sIter, ArrayList<Content> sectionContent) {
+    private void parseTemplate(StringIterator iter, ArrayList<Content> sectionContent) {
         StringBuilder sb = new StringBuilder();
         int depth = 0;
-        sb.append(sIter.next());
-        sb.append(sIter.next());
-        do {
-            while (sIter.hasNext()) {
-                if (sIter.next2IsEndOfTemplate() && (depth == 0)) {
-                    sb.append(sIter.next());
-                    sb.append(sIter.next());
-//                    System.out.println("Template: " + sb.toString());
-                    Template template = TemplateFactory.getTemplate(sb.toString());
-                    if (template instanceof RegionList || template instanceof Climate || template instanceof RouteBox) {
-                        sectionContent.add((Content) template);
-                    } else {
-                        text.add(template);
-                    }
-                    return;
-                } else if (sIter.next2IsStartOfTemplate()) {
-                    depth++;
-                } else if (sIter.next2IsEndOfTemplate()) {
-                    depth--;
+        sb.append(iter.next());
+        sb.append(iter.next());
+        while (iter.hasNext()) {
+            if (iter.isAtEndOfTemplate() && (depth == 0)) {
+                sb.append(iter.next());
+                sb.append(iter.next());
+                System.out.println("Template: " + sb.toString() + " :Template");
+                Template template = TemplateFactory.getTemplate(sb.toString());
+                if (template instanceof RegionList || template instanceof Climate || template instanceof RouteBox) {
+                    sectionContent.add((Content) template);
+                } else {
+                    text.add(template);
                 }
-                sb.append(sIter.next());
+                return;
+            } else if (iter.isAtStartOfTemplate()) {
+                depth++;
+            } else if (iter.isAtEndOfTemplate()) {
+                depth--;
             }
-            if (!sIter.hasNext()) {
-                sIter = new StringIterator(lIter.next());
+            if (iter.peekNext() == '\n') {
+                iter.next();
+            } else {
+                sb.append(iter.next());
             }
-        } while (lIter.hasNext());
+        }
     }
 
     private String gatherText() {

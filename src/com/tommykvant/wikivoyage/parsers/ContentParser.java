@@ -10,22 +10,19 @@ import java.util.ArrayList;
 
 public class ContentParser {
 
-    public static ArrayList<Content> parse(LineIterator iterator) {
+    public static ArrayList<Content> parse(StringIterator iterator) {
         ArrayList<Content> out = new ArrayList<Content>();
 
-        while (iterator.hasNext() && !iterator.peekNext().startsWith("=")) {
-            if (iterator.peekNext().equals("")) {
+        while (iterator.hasNext() && iterator.peekNext() != '=') {
+            if (iterator.peekNext() == '\n') {
                 // deal with horizontal spacing
                 out.add(new HorizontalSpace());
                 iterator.next();
-            } else if (iterator.peekNext().startsWith("<!--")) {
-                // Do not include comments
-                parseComments(iterator);
-            } else if (iterator.peekNext().startsWith("*")) {
+            } else if (iterator.peekNext() == '*') {
                 // Parse lists separately
                 out.add(ListCreator.create(iterator, out));
-            } else if (iterator.peekNext().startsWith(":")) {
-                // Indention
+            } else if (iterator.peekNext() == ':') {
+                // Indentation
                 out.add(new IndentedTextContent(iterator, out));
             } else {
                 // String text = parseText(iterator);
@@ -35,62 +32,4 @@ public class ContentParser {
 
         return out;
     }
-
-    private static String parseList(LineIterator iterator) {
-        StringBuilder sb = new StringBuilder();
-        while (iterator.hasNext() && iterator.peekNext().startsWith("*")) {
-            sb.append(iterator.next()).append("\n");
-        }
-        return sb.toString();
-    }
-
-    private static String parseText(LineIterator iterator) {
-        StringBuilder sb = new StringBuilder();
-        while (iterator.hasNext() && !iterator.peekNext().equals("")
-                && !iterator.peekNext().startsWith("=")
-                && !iterator.peekNext().startsWith("*")) {
-            String text = fixIndent(iterator.next());
-            sb.append(text);
-
-            if (iterator.hasNext() && !iterator.peekNext().equals("")
-                    && !iterator.peekNext().startsWith("=")
-                    && !iterator.peekNext().startsWith("*")) {
-                sb.append("<br>");
-            }
-        }
-        return sb.toString();
-    }
-
-    private static String fixIndent(String text) {
-        int indentDepth = getIndentDepth(text);
-        return generateIndent(indentDepth) + text.substring(indentDepth);
-    }
-
-    private static String generateIndent(int indentDepth) {
-        StringBuilder out = new StringBuilder();
-        for (int i = 0; i < indentDepth; i++) {
-            out.append("&nbsp;&nbsp;&nbsp;");
-        }
-        return out.toString();
-    }
-
-    private static int getIndentDepth(String text) {
-        StringIterator iterator = new StringIterator(text);
-        int indentDepth = 0;
-        while (iterator.hasNext() && iterator.peekNext() == ':') {
-            indentDepth++;
-            iterator.next();
-        }
-        return indentDepth;
-    }
-
-    private static void parseComments(LineIterator iterator) {
-        while (iterator.hasNext()) {
-            String line = iterator.next();
-            if (line.endsWith("-->") || line.startsWith("-->")) {
-                break;
-            }
-        }
-    }
-
 }

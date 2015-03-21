@@ -66,12 +66,12 @@ public class TemplateFactory {
                 iter.next();
                 end += 2;
                 inBrackets = false;
-            } else if (iter.next2IsStartOfTemplate()) {
+            } else if (iter.isAtStartOfTemplate()) {
                 iter.next();
                 iter.next();
                 end += 2;
                 inCurlBrackets = true;
-            } else if (iter.next2IsEndOfTemplate()) {
+            } else if (iter.isAtEndOfTemplate()) {
                 iter.next();
                 iter.next();
                 end += 2;

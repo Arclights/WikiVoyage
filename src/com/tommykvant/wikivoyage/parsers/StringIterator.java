@@ -8,11 +8,14 @@ public class StringIterator {
 
     public StringIterator(String s) {
         chars = s.toCharArray();
-        charsEnd = chars.length-1;
+        charsEnd = chars.length - 1;
         i = -1;
     }
 
     public char next() {
+        if (chars[i + 1] == '<' && chars[i + 2] == '!' && chars[i + 3] == '-' && chars[i + 4] == '-') {
+            consumeComment();
+        }
         return chars[++i];
     }
 
@@ -20,11 +23,11 @@ public class StringIterator {
         return chars[i + 1];
     }
 
-    public boolean next2IsStartOfTemplate() {
+    public boolean isAtStartOfTemplate() {
         return chars[i + 1] == '{' && chars[i + 2] == '{';
     }
 
-    public boolean next2IsEndOfTemplate() {
+    public boolean isAtEndOfTemplate() {
         return chars[i + 1] == '}' && chars[i + 2] == '}';
     }
 
@@ -36,14 +39,23 @@ public class StringIterator {
         return chars[i + 1] == ']' && chars[i + 2] == ']';
     }
 
-//	public String peekNext2() {
-//		if (i + 2 < chars.length) {
-//			return "" + chars[i + 1] + chars[i + 2];
-//		}
-//		return "" + chars[i + 1];
-//	}
+    private void consumeComment() {
+        i += 4;
+        while (chars[i + 1] != '-' && chars[i + 2] != '-' && chars[i + 3] != '>') {
+            i++;
+        }
+        i += 3;
+    }
 
     public boolean hasNext() {
         return i < charsEnd;
+    }
+
+    public void printCurrPlace() {
+        StringBuilder sb = new StringBuilder();
+        for (int j = i+1; j < i + 10; j++) {
+            sb.append(chars[j]);
+        }
+        System.out.println("Iterator curent place: " + sb.toString());
     }
 }
