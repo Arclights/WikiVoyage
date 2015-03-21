@@ -2,4 +2,8 @@
 <resources>
     <color name="primaryColor">#F44336</color>
     <color name="primaryColorDark">#D32F2F</color>
+    <color name="fab_color_1">#ff5252</color>
+    <color name="fab_color_1_muted">#ff8080</color>
+    <color name="fab_color_2">#9c27b0</color>
+    <color name="fab_color_2_muted">#a56ab0</color>
 </resources>

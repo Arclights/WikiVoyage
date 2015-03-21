@@ -7,8 +7,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+
+import com.tommykvant.wikivoyage.ui.FloatingActionButton;
 
 public class MainPage extends Activity {
 
@@ -25,6 +28,15 @@ public class MainPage extends Activity {
                                           KeyEvent event) {
                 search(null);
                 return false;
+            }
+        });
+
+        RelativeLayout rl = (RelativeLayout) findViewById(R.id.main_page_bg);
+        rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.search_button);
+                fab.hide();
             }
         });
     }

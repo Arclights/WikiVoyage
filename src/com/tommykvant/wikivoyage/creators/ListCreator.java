@@ -3,7 +3,6 @@ package com.tommykvant.wikivoyage.creators;
 import com.tommykvant.wikivoyage.details.content.Content;
 import com.tommykvant.wikivoyage.details.data.ListContent;
 import com.tommykvant.wikivoyage.details.data.ListContentItem;
-import com.tommykvant.wikivoyage.parsers.LineIterator;
 import com.tommykvant.wikivoyage.parsers.StringIterator;
 
 import java.util.ArrayList;

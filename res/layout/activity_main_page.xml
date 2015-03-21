@@ -6,40 +6,56 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainPage" >
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/search_header" />
+    tools:context=".MainPage"
+    android:id="@+id/main_page_bg">
 
     <EditText
         android:id="@+id/searchBox"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_alignStart="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="77dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="@string/search_hint"
         android:inputType="text"
-        android:imeOptions="actionSearch" >
+        android:imeOptions="actionSearch"
+        android:layout_alignStart="@id/search_button"
+        android:layout_alignLeft="@id/search_button"
+        android:layout_alignBottom="@id/search_button"
+        android:background="@drawable/search_box_bg"/>
 
-        <requestFocus />
-    </EditText>
 
-    <Button
-        android:id="@+id/searchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/searchBox"
-        android:layout_toEndOf="@id/searchBox"
-        android:layout_toRightOf="@id/searchBox"
-        android:text="@string/search_button" 
-        android:onClick="search"/>
+    <View
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:background="@drawable/white_rectangle"
+        android:layout_alignStart="@id/search_button"
+        android:layout_alignLeft="@id/search_button"
+        android:layout_alignBottom="@id/search_button"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="-30dp"
+        android:id="@+id/masker" />
+
+    <com.tommykvant.wikivoyage.ui.FloatingActionButton
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/fab_background"
+        android:elevation="@dimen/fab_elevation"
+        android:id="@+id/search_button"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="@dimen/fab_icon_size"
+            android:layout_height="@dimen/fab_icon_size"
+            android:src="@drawable/fab_icons"
+            android:layout_gravity="center"
+            android:duplicateParentState="true" />
+    </com.tommykvant.wikivoyage.ui.FloatingActionButton>
+
 
 </RelativeLayout>
