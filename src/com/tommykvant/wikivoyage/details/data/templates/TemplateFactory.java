@@ -56,22 +56,22 @@ public class TemplateFactory {
         boolean inCurlBrackets = false;
         StringIterator iter = new StringIterator(string);
         while (iter.hasNext()) {
-            if (iter.peekNext2().equals("[[")) {
+            if (iter.next2IsStartBrackets()) {
                 iter.next();
                 iter.next();
                 end += 2;
                 inBrackets = true;
-            } else if (iter.peekNext2().equals("]]")) {
+            } else if (iter.next2IsEndBrackets()) {
                 iter.next();
                 iter.next();
                 end += 2;
                 inBrackets = false;
-            } else if (iter.peekNext2().equals("{{")) {
+            } else if (iter.next2IsStartOfTemplate()) {
                 iter.next();
                 iter.next();
                 end += 2;
                 inCurlBrackets = true;
-            } else if (iter.peekNext2().equals("}}")) {
+            } else if (iter.next2IsEndOfTemplate()) {
                 iter.next();
                 iter.next();
                 end += 2;

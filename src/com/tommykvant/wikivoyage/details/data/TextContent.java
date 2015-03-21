@@ -3,7 +3,6 @@ package com.tommykvant.wikivoyage.details.data;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,7 +34,7 @@ public class TextContent implements Content {
         StringIterator strIter;
         strIter = new StringIterator(iterator.next());
         while (strIter.hasNext()) {
-            if (strIter.peekNext2().equals("{{")) {
+            if (strIter.next2IsStartOfTemplate()) {
                 text.add(new TextContentText(TextFormatter.format(textBuilder.toString())));
                 textBuilder = new StringBuilder();
                 parseTemplate(iterator, strIter, sectionContent);
@@ -53,10 +52,10 @@ public class TextContent implements Content {
         sb.append(sIter.next());
         do {
             while (sIter.hasNext()) {
-                if (sIter.peekNext2().equals("}}") && depth == 0) {
+                if (sIter.next2IsEndOfTemplate() && (depth == 0)) {
                     sb.append(sIter.next());
                     sb.append(sIter.next());
-                    System.out.println("Template: " + sb.toString());
+//                    System.out.println("Template: " + sb.toString());
                     Template template = TemplateFactory.getTemplate(sb.toString());
                     if (template instanceof RegionList || template instanceof Climate || template instanceof RouteBox) {
                         sectionContent.add((Content) template);
@@ -64,9 +63,9 @@ public class TextContent implements Content {
                         text.add(template);
                     }
                     return;
-                } else if (sIter.peekNext2().equals("{{")) {
+                } else if (sIter.next2IsStartOfTemplate()) {
                     depth++;
-                } else if (sIter.peekNext2().equals("}}")) {
+                } else if (sIter.next2IsEndOfTemplate()) {
                     depth--;
                 }
                 sb.append(sIter.next());

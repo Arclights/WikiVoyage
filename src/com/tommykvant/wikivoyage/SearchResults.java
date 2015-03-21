@@ -27,6 +27,7 @@ import com.tommykvant.wikivoyage.utils.Utils;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -129,8 +130,13 @@ public class SearchResults extends ActionBarActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String result = WebFetcher.fetch(uri);
-			ArrayList<SearchResult> parsedResults = new ArrayList<SearchResult>();
+            String result = null;
+            try {
+                result = WebFetcher.fetch(uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ArrayList<SearchResult> parsedResults = new ArrayList<SearchResult>();
 			try {
 				parsedResults = SearchParser.parse(result);
 			} catch (JSONException e) {

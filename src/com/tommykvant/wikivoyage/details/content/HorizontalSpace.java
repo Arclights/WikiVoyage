@@ -1,6 +1,10 @@
 package com.tommykvant.wikivoyage.details.content;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
@@ -14,6 +18,11 @@ public class HorizontalSpace implements Content {
     @Override
     public View getView(Context context) {
         TextView tv = new TextView(context);
+        GradientDrawable gd = new GradientDrawable();
+        gd.setColor(0xFF00FF00); // Changes this drawbale to use a single color instead of a gradient
+        gd.setCornerRadius(5);
+        gd.setStroke(1, 0xFF000000);
+        tv.setBackground(gd);
         tv.setText("");
         return tv;
     }

@@ -30,7 +30,7 @@ public class UriGenerator {
 	public static URI generateDetailURI(String title)
 			throws URISyntaxException, UnsupportedEncodingException {
 		return new URI(
-				"http://en.wikivoyage.org/w/api.php?action=parse&format=json&prop=wikitext&page="
+				"http://en.wikivoyage.org/w/api.php?action=parse&format=json&utf8&prop=wikitext&page="
 						+ encodeString(title));
 	}
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -101,11 +102,14 @@ public class DestinationListActivity extends ActionBarActivity implements
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            String result = WebFetcher.fetch(uri);
-            System.out.println("result: " + result);
+
             Details d = null;
             try {
+                String result = WebFetcher.fetch(uri);
+                System.out.println("result: " + result);
+                Debug.startMethodTracing("parsing");
                 d = DetailParser.parse(result, page);
+                Debug.stopMethodTracing();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -154,7 +158,7 @@ public class DestinationListActivity extends ActionBarActivity implements
                     DestinationDetailActivity.class);
             detailIntent.putExtra(DestinationDetailFragment.ARG_SECTION,
                     section);
-            detailIntent.putExtra(DETAIL_PAGE_NAME,pageName);
+            detailIntent.putExtra(DETAIL_PAGE_NAME, pageName);
             startActivity(detailIntent);
         }
     }
