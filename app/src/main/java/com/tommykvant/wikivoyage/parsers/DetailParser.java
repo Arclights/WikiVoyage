@@ -1,20 +1,17 @@
 package com.tommykvant.wikivoyage.parsers;
 
+import com.tommykvant.wikivoyage.client.Parse;
+import com.tommykvant.wikivoyage.client.WikiVoyageDetails;
 import com.tommykvant.wikivoyage.details.data.Details;
 import com.tommykvant.wikivoyage.details.data.Header;
 import com.tommykvant.wikivoyage.details.data.Section;
 
-import org.json.JSONException;
-
-import java.io.IOException;
-
 public class DetailParser {
 
-    public static Details parse(String toParse, String title)
-            throws IOException, JSONException {
-        String content = extractWikiText(toParse, title);
-        StringIterator iterator = new StringIterator(content);
-        Details d = new Details(title);
+    public static Details parse(WikiVoyageDetails wikiVoyageDetails) {
+        Parse parse = wikiVoyageDetails.getParse();
+        StringIterator iterator = new StringIterator(parse.getWikitext().getContent());
+        Details d = new Details(parse.getTitle());
         parseSections(d, iterator);
 
         return d;
@@ -67,9 +64,4 @@ public class DetailParser {
         }
         return out;
     }
-
-    private static String extractWikiText(String json, String title) {
-        return json.substring(38 + title.length(), json.length() - 5).replace("\\n", "\n");
-    }
-
 }

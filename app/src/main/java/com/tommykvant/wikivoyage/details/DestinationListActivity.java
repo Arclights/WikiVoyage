@@ -8,15 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.tommykvant.wikivoyage.R;
+import com.tommykvant.wikivoyage.client.WikiVoyageClient;
+import com.tommykvant.wikivoyage.client.WikiVoyageDetails;
 import com.tommykvant.wikivoyage.details.data.Details;
 import com.tommykvant.wikivoyage.details.data.Section;
 import com.tommykvant.wikivoyage.fetchers.UriGenerator;
-import com.tommykvant.wikivoyage.fetchers.WebFetcher;
 import com.tommykvant.wikivoyage.parsers.DetailParser;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -101,20 +99,11 @@ public class DestinationListActivity extends AppCompatActivity implements
                 e.printStackTrace();
             }
 
-            Details d = null;
-            try {
-                String result = WebFetcher.fetch(uri);
-                System.out.println("result: " + result);
-                Debug.startMethodTracing("parsing");
-                d = DetailParser.parse(result, page);
-                Debug.stopMethodTracing();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            WikiVoyageDetails result = WikiVoyageClient.Companion.getDetails(uri.toString());
+            System.out.println("result: " + result);
+            Debug.startMethodTracing("parsing");
+            Details d = DetailParser.parse(result);
+            Debug.stopMethodTracing();
             return d;
         }
 

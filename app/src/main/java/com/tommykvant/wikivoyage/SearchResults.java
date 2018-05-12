@@ -18,16 +18,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.tommykvant.wikivoyage.client.WikiVoyageClient;
 import com.tommykvant.wikivoyage.containers.SearchResult;
 import com.tommykvant.wikivoyage.details.DestinationListActivity;
 import com.tommykvant.wikivoyage.fetchers.UriGenerator;
-import com.tommykvant.wikivoyage.fetchers.WebFetcher;
 import com.tommykvant.wikivoyage.parsers.SearchParser;
 import com.tommykvant.wikivoyage.utils.Utils;
 
 import org.json.JSONException;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -110,9 +109,9 @@ public class SearchResults extends AppCompatActivity {
 	}
 
 	/**
-	 * 
+	 *
 	 * @author tommy
-	 * 
+	 *
 	 *         Param1 - Title to search for Param2 - sroffset
 	 */
 	private class PageLoader extends
@@ -130,12 +129,7 @@ public class SearchResults extends AppCompatActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            String result = null;
-            try {
-                result = WebFetcher.fetch(uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String result = WikiVoyageClient.Companion.fetch(uri.toString());
             ArrayList<SearchResult> parsedResults = new ArrayList<SearchResult>();
 			try {
 				parsedResults = SearchParser.parse(result);
