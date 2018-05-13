@@ -67,9 +67,8 @@ public class DestinationDetailActivity extends AppCompatActivity {
                 //
                 // http://developer.android.com/design/patterns/navigation.html#up-vs-back
                 //
-                Intent intent = new Intent(this,
-                        DestinationListActivity.class);
-                intent.putExtra(DestinationListActivity.DETAIL_PAGE_NAME, pageName);
+                Intent intent = NavUtils.getParentActivityIntent(this)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 NavUtils.navigateUpTo(this, intent);
                 return true;
         }

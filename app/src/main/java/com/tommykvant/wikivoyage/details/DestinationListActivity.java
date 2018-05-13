@@ -71,14 +71,20 @@ public class DestinationListActivity extends AppCompatActivity implements
 
         pageName = getIntent().getExtras().getString(DETAIL_PAGE_NAME);
         Log.d("DestinationListActivity.onCreate", "Starting an activity for " + pageName);
-        new DetailLoader().execute(pageName);
+
+        if (savedInstanceState != null) {
+            details = savedInstanceState.getParcelable(DETAIL_DETAILS);
+        }
+
+        if (details == null) {
+            new DetailLoader().execute(pageName);
+        }
         setTitle(pageName);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        System.out.println("Saving list activity");
         outState.putString(DETAIL_PAGE_NAME, pageName);
         outState.putParcelable(DETAIL_DETAILS, details);
     }
@@ -135,17 +141,17 @@ public class DestinationListActivity extends AppCompatActivity implements
                     section);
             DestinationDetailFragment fragment = new DestinationDetailFragment();
             fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.section_detail_container, fragment).commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.section_detail_container, fragment)
+                    .commit();
 
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
-            Intent detailIntent = new Intent(this,
-                    DestinationDetailActivity.class);
-            detailIntent.putExtra(DestinationDetailFragment.ARG_SECTION,
-                    section);
-            detailIntent.putExtra(DETAIL_PAGE_NAME, pageName);
+            Intent detailIntent = new Intent(this, DestinationDetailActivity.class)
+                    .putExtra(DestinationDetailFragment.ARG_SECTION, section)
+                    .putExtra(DETAIL_PAGE_NAME, pageName);
             startActivity(detailIntent);
         }
     }
