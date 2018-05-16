@@ -9,7 +9,7 @@ object TemplateFactory {
 
     fun getTemplate(content: String): Template {
         val parts = split(content.substring(2, content.length - 2), '|')
-        val type = parts[0]
+        val type = parts.first().trim()
 
         return when (type) {
             "do",

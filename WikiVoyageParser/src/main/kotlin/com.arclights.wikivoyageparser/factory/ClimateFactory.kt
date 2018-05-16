@@ -14,6 +14,7 @@ import java.time.Month.JANUARY
 import java.time.Month.JULY
 import java.time.Month.JUNE
 import java.time.Month.MARCH
+import java.time.Month.MAY
 import java.time.Month.NOVEMBER
 import java.time.Month.OCTOBER
 import java.time.Month.SEPTEMBER
@@ -24,6 +25,7 @@ private val monthMappings = mapOf(
         "feb" to FEBRUARY,
         "mar" to MARCH,
         "apr" to APRIL,
+        "may" to MAY,
         "jun" to JUNE,
         "jul" to JULY,
         "aug" to AUGUST,
@@ -36,8 +38,8 @@ private val monthMappings = mapOf(
 object ClimateFactory {
     fun getClimate(parts: List<String>): Climate {
         val mappings = parts
-                .map { it.split("=") }
-                .map { it[0] to it[1] }
+                .map { it.split("=").map { it.trim() } }
+                .map { if (it.size > 1) it[0] to it[1] else "name" to it[0] }
                 .toMap()
         val unit = when (mappings["units"]) {
             "Imperial" -> IMPERIAL
@@ -55,7 +57,7 @@ object ClimateFactory {
                         .mapNotNull { (key, nullable) -> nullable?.let { key to it } }
                         .toMap(),
                 precipitation = monthMappings
-                        .map { it.value to mappings["${it.key}low"]?.toDouble()?.toPrecipitation(unit) }
+                        .map { it.value to mappings["${it.key}precip"]?.toDouble()?.toPrecipitation(unit) }
                         .mapNotNull { (key, nullable) -> nullable?.let { key to it } }
                         .toMap(),
                 description = mappings["description"]!!
