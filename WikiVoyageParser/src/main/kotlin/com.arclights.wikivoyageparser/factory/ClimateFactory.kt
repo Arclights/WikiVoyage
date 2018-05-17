@@ -6,6 +6,7 @@ import com.arclights.wikivoyageparser.MeasurementUnit
 import com.arclights.wikivoyageparser.MeasurementUnit.IMPERIAL
 import com.arclights.wikivoyageparser.MeasurementUnit.METRIC
 import com.arclights.wikivoyageparser.Precipitation
+import com.arclights.wikivoyageparser.factory.Utils.parseKeyValues
 import java.time.Month.APRIL
 import java.time.Month.AUGUST
 import java.time.Month.DECEMBER

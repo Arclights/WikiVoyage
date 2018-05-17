@@ -60,7 +60,7 @@ data class Listing(
 data class RegioList(
         val mapImageLink: String,
         val text: String,
-        val mapSize: Int,
+        val mapSize: String,
         val regions: List<Region>
 ) : Template
 

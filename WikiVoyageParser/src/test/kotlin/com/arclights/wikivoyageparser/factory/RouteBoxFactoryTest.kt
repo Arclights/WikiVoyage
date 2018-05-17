@@ -56,6 +56,26 @@ internal class RouteBoxFactoryTest {
                                             directionr = "N",
                                             majorr = "[[Sundsvall]]",
                                             minorr = "[[Solna]]"
+                                    ),
+                                    Route(
+                                            imageLink = "Tabliczka E18.svg",
+                                            imageSize = 22,
+                                            directionl = "W",
+                                            majorl = "[[Oslo]]",
+                                            minorl = "[[Enköping]]",
+                                            directionr = "E",
+                                            majorr = "[[Turku]] ([[Image:Ferry.png|18px]])",
+                                            minorr = "[[Norrtälje]]"
+                                    ),
+                                    Route(
+                                            imageLink = "Tabliczka E20.svg",
+                                            imageSize = 22,
+                                            directionl = "W",
+                                            majorl = "[[Göteborg]]",
+                                            minorl = "[[Södertälje]]",
+                                            directionr = "E",
+                                            majorr = "[[Tallinn]]",
+                                            minorr = "[[Image:Ferry.png|18px]]"
                                     )
                             )
                     )
