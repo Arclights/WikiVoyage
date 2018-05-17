@@ -76,3 +76,12 @@ object TemplateFactory {
         return parts
     }
 }
+
+fun List<String>.parseKeyValues() = this
+        .map {
+            it.split("=")
+                    .map { it.trim() }
+                    .map { it.replace("\\n", "") }
+        }
+        .map { if (it.size > 1) it[0] to it[1] else "name" to it[0] }
+        .toMap()

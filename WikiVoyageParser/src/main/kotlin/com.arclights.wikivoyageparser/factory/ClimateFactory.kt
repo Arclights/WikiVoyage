@@ -37,10 +37,7 @@ private val monthMappings = mapOf(
 
 object ClimateFactory {
     fun getClimate(parts: List<String>): Climate {
-        val mappings = parts
-                .map { it.split("=").map { it.trim() } }
-                .map { if (it.size > 1) it[0] to it[1] else "name" to it[0] }
-                .toMap()
+        val mappings = parts.parseKeyValues()
         val unit = when (mappings["units"]) {
             "Imperial" -> IMPERIAL
             "Metric" -> METRIC

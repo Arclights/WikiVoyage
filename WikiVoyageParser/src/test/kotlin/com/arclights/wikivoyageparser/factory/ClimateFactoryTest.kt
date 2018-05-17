@@ -16,11 +16,11 @@ class ClimateFactoryTest {
         testCases
                 .forEach { (input, expectedResult) ->
                     val result = ClimateFactory.getClimate(input)
-                    assertClimateEquals(expectedResult, result)
+                    assertClimatesEquals(expectedResult, result)
                 }
     }
 
-    private fun assertClimateEquals(expectedClimate: Climate, actualClimate: Climate) {
+    private fun assertClimatesEquals(expectedClimate: Climate, actualClimate: Climate) {
         assertEquals(expectedClimate.unit, actualClimate.unit, "Unit does not match")
         assertEquals(expectedClimate.description, actualClimate.description, "Description does not match")
 
