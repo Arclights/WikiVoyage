@@ -1,25 +1,27 @@
 package com.arclights.wikivoyageparser.factory
 
 import com.arclights.wikivoyageparser.Listing
+import com.arclights.wikivoyageparser.factory.Utils.parseKeyValues
+import com.arclights.wikivoyageparser.factory.Utils.valueOrNullForEmpty
 
 object ListingFactory {
     fun getListing(parts: List<String>): Listing {
-        val mappings = parts.map { it.split("=").let { it[0] to it[1] } }.toMap()
+        val mappings = parts.parseKeyValues()
         return Listing(
                 name = mappings["name"]!!,
-                url = mappings["url"],
-                alt = mappings["alt"],
-                email = mappings["email"],
-                address = mappings["address"],
-                latitude = mappings["lat"]?.toDouble(),
-                longitude = mappings["long"]?.toDouble(),
-                directions = mappings["directions"],
-                phone = mappings["phone"],
-                tollFree = mappings["tollfree"],
-                fax = mappings["fax"],
-                hours = mappings["hours"],
-                price = mappings["price"],
-                content = mappings["content"]
+                url = mappings.valueOrNullForEmpty("url"),
+                alt = mappings.valueOrNullForEmpty("alt"),
+                email = mappings.valueOrNullForEmpty("email"),
+                address = mappings.valueOrNullForEmpty("address"),
+                latitude = mappings.valueOrNullForEmpty("lat")?.toDouble(),
+                longitude = mappings.valueOrNullForEmpty("long")?.toDouble(),
+                directions = mappings.valueOrNullForEmpty("directions"),
+                phone = mappings.valueOrNullForEmpty("phone"),
+                tollFree = mappings.valueOrNullForEmpty("tollfree"),
+                fax = mappings.valueOrNullForEmpty("fax"),
+                hours = mappings.valueOrNullForEmpty("hours"),
+                price = mappings.valueOrNullForEmpty("price"),
+                content = mappings.valueOrNullForEmpty("content")
         )
     }
 }
