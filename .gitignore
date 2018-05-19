@@ -2,7 +2,6 @@
 .gradle/
 build/
 gen/
-gradle/
 gradlew
 gradlew.bat
 local.properties
