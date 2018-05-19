@@ -12,17 +12,18 @@ import com.arclights.wikivoyageparser.RegionList
 import com.arclights.wikivoyageparser.Region
 import com.arclights.wikivoyageparser.Route
 import com.arclights.wikivoyageparser.RouteBox
+import com.arclights.wikivoyageparser.StringIterator
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.time.Month
 
-internal class TemplateFactoryTest {
+internal class TemplateParserTest {
 
     @Test
     fun `Return Climate`() {
         climateTestCases
                 .forEach { (input, expectedClimate) ->
-                    val actualClimate = TemplateFactory.getTemplate(input)
+                    val actualClimate = TemplateParser.parse(StringIterator(input))
 
                     assertTrue(actualClimate is Climate)
                     assertClimatesEquals(expectedClimate, actualClimate as Climate)
@@ -33,7 +34,7 @@ internal class TemplateFactoryTest {
     fun `Return Flag`() {
         flagTestCases
                 .forEach { (input, expectedFlag) ->
-                    val actualFlag = TemplateFactory.getTemplate(input)
+                    val actualFlag = TemplateParser.parse(StringIterator(input))
 
                     assertTrue(actualFlag is Flag)
                     assertEquals(expectedFlag, actualFlag as Flag)
@@ -44,7 +45,7 @@ internal class TemplateFactoryTest {
     fun `Return IATA`() {
         IATATestCases
                 .forEach { (input, expectedIATA) ->
-                    val actualIATA = TemplateFactory.getTemplate(input)
+                    val actualIATA = TemplateParser.parse(StringIterator(input))
 
                     assertTrue(actualIATA is IATA)
                     assertEquals(expectedIATA, actualIATA as IATA)
@@ -55,7 +56,7 @@ internal class TemplateFactoryTest {
     fun `Return Listing`() {
         listingTestCases
                 .forEach { (input, expectedListing) ->
-                    val actualListing = TemplateFactory.getTemplate(input)
+                    val actualListing = TemplateParser.parse(StringIterator(input))
 
                     assertTrue(actualListing is Listing)
                     assertEquals(expectedListing, actualListing as Listing)
@@ -66,7 +67,7 @@ internal class TemplateFactoryTest {
     fun `Return Regional List`() {
         regionListTestCases
                 .forEach { (input, expectedRegionalList) ->
-                    val actualRegionalList = TemplateFactory.getTemplate(input)
+                    val actualRegionalList = TemplateParser.parse(StringIterator(input))
 
                     assertTrue(actualRegionalList is RegionList)
                     assertEquals(expectedRegionalList, actualRegionalList as RegionList)
@@ -78,7 +79,7 @@ internal class TemplateFactoryTest {
     fun `Return Route Box`() {
         routeBoxTestCases
                 .forEach { (input, expectedRouteBox) ->
-                    val actualRouteBox = TemplateFactory.getTemplate(input)
+                    val actualRouteBox = TemplateParser.parse(StringIterator(input))
 
                     assertTrue(actualRouteBox is RouteBox)
                     assertEquals(expectedRouteBox, actualRouteBox as RouteBox)
@@ -89,7 +90,7 @@ internal class TemplateFactoryTest {
     fun `Return Null Template`() {
         nullTemplateTestCases
                 .forEach { (input, expectedNullTemplate) ->
-                    val actualNullTemplate = TemplateFactory.getTemplate(input)
+                    val actualNullTemplate = TemplateParser.parse(StringIterator(input))
 
                     assertTrue(actualNullTemplate is NullTemplate)
                     assertEquals(expectedNullTemplate, actualNullTemplate as NullTemplate)

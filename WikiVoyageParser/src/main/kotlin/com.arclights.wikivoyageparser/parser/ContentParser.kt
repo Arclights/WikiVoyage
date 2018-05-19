@@ -4,6 +4,7 @@ import com.arclights.wikivoyageparser.Constants.Companion.headerDelimiter
 import com.arclights.wikivoyageparser.Content
 import com.arclights.wikivoyageparser.HorizontalSpace
 import com.arclights.wikivoyageparser.StringIterator
+import com.arclights.wikivoyageparser.factory.TemplateParser
 import java.util.*
 
 object ContentParser {
