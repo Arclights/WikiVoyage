@@ -1,4 +1,4 @@
-package java.com.tommykvant.wikivoyage.parsers;
+package com.tommykvant.wikivoyage.parsers;
 
 public class ContentParserTest {
 }
