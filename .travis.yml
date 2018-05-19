@@ -11,7 +11,7 @@ addons:
 jdk:
   - oraclejdk8
 script:
-  - gradle sonarqube
+  - ./gradlew sonarqube
 cache:
   directories:
     - '$HOME/.m2/repository'
