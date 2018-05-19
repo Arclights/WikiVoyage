@@ -2,8 +2,6 @@
 .gradle/
 build/
 gen/
-gradlew
-gradlew.bat
 local.properties
 *~
 *.iml
