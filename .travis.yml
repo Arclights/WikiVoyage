@@ -22,4 +22,7 @@ cache:
     - '$HOME/.gradle'
     - '.gradle'
 before_install:
- - chmod +x gradlew
+  - chmod +x gradlew
+before_script:
+  - "echo $JAVA_OPTS"
+  - "export JAVA_OPTS=-Xmx1024m"
