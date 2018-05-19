@@ -17,6 +17,14 @@ allprojects {
         google()
         jcenter()
     }
+    sonarqube {
+        properties {
+            property "sonar.language", "java"
+            property "sonar.sources", "app/src/main"
+            property "sonar.java.binaries", "build"
+            property "sonar.sourceEncoding", "UTF-8"
+        }
+    }
 }
 
 task clean(type: Delete) {
