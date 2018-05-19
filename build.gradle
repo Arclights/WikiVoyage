@@ -10,14 +10,25 @@ buildscript {
     }
 }
 
+plugins {
+    id "org.sonarqube" version "2.6.2"
+}
+
 allprojects {
     repositories {
         google()
         jcenter()
+    }
+    sonarqube {
+        properties {
+            property "sonar.language", "java"
+            property "sonar.sources", "app/src/main"
+            property "sonar.java.binaries", "build"
+            property "sonar.sourceEncoding", "UTF-8"
+        }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
