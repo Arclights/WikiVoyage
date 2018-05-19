@@ -21,7 +21,6 @@ allprojects {
     }
     sonarqube {
         properties {
-            property "sonar.language", "java"
             property "sonar.sources", "src/main"
             property "sonar.java.binaries", "build"
             property "sonar.sourceEncoding", "UTF-8"
