@@ -57,7 +57,7 @@ data class Listing(
         val content: String? = null
 ) : Template
 
-data class RegioList(
+data class RegionList(
         val mapImageLink: String,
         val text: String,
         val mapSize: String,
@@ -102,7 +102,15 @@ data class IATA(
         val text: String
 ) : Template
 
-class NullTemplate : Template
+class NullTemplate : Template {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        return true
+    }
+
+    override fun hashCode() = javaClass.hashCode()
+}
 
 data class RouteBox(
         val routes: List<Route>

@@ -1,6 +1,6 @@
 package com.arclights.wikivoyageparser.factory
 
-import com.arclights.wikivoyageparser.RegioList
+import com.arclights.wikivoyageparser.RegionList
 import com.arclights.wikivoyageparser.Region
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -66,7 +66,7 @@ class RegionListFactoryTest {
                     " region10description= A suburban island just east of Stockholm, containing the ''Millesgården'' sculpture museum; the ''Ekholmsnäs'' ski slope; and ''Elfvik'': a farmland with an array of conference hotels.\\n"
             )
                     to
-                    RegioList(
+                    RegionList(
                             mapImageLink = "Wikivoyage_map_Stockholm_PNG.png",
                             mapSize = "500px",
                             text = "Districts of Stockholm",

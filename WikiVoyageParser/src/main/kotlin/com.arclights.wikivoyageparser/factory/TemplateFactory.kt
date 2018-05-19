@@ -3,13 +3,14 @@ package com.arclights.wikivoyageparser.factory
 import com.arclights.wikivoyageparser.NullTemplate
 import com.arclights.wikivoyageparser.StringIterator
 import com.arclights.wikivoyageparser.Template
+import com.arclights.wikivoyageparser.factory.Utils.trimSpaceAndNewline
 import java.util.ArrayList
 
 object TemplateFactory {
 
     fun getTemplate(content: String): Template {
         val parts = split(content.substring(2, content.length - 2), '|')
-        val type = parts.first().trim()
+        val type = parts.first().trimSpaceAndNewline().toLowerCase()
 
         return when (type) {
             "do",
@@ -19,14 +20,12 @@ object TemplateFactory {
             "drink",
             "sleep",
             "listing" -> ListingFactory.getListing(parts)
-            "Regionlist" -> RegionListFactory.getRegionList(parts)
+            "regionlist" -> RegionListFactory.getRegionList(parts)
             "flag" -> FlagFactory.getFlag(parts)
-            "Climate" -> ClimateFactory.getClimate(parts)
-            "IATA" -> IATAFactory.getIATA(parts)
+            "climate" -> ClimateFactory.getClimate(parts)
+            "iata" -> IATAFactory.getIATA(parts)
+            "routebox" -> RouteBoxFactory.getRouteBox(parts)
             else -> {
-                if (type.startsWith("routebox")) {
-                    RouteBoxFactory.getRouteBox(parts)
-                }
                 println("TemplateFactory: Unknown template: $type")
                 NullTemplate()
             }
@@ -41,26 +40,31 @@ object TemplateFactory {
         var inCurlBrackets = false
         val iter = StringIterator(string)
         while (iter.hasNext()) {
-            if (iter.next2IsStartBrackets()) {
-                iter.next()
-                iter.next()
-                end += 2
-                inBrackets = true
-            } else if (iter.next2IsEndBrackets()) {
-                iter.next()
-                iter.next()
-                end += 2
-                inBrackets = false
-            } else if (iter.isAtStartOfTemplate()) {
-                iter.next()
-                iter.next()
-                end += 2
-                inCurlBrackets = true
-            } else if (iter.isAtEndOfTemplate()) {
-                iter.next()
-                iter.next()
-                end += 2
-                inCurlBrackets = false
+            when {
+                iter.next2IsStartBrackets() -> {
+                    iter.next()
+                    iter.next()
+                    end += 2
+                    inBrackets = true
+                }
+                iter.next2IsEndBrackets() -> {
+                    iter.next()
+                    iter.next()
+                    end += 2
+                    inBrackets = false
+                }
+                iter.isAtStartOfTemplate() -> {
+                    iter.next()
+                    iter.next()
+                    end += 2
+                    inCurlBrackets = true
+                }
+                iter.isAtEndOfTemplate() -> {
+                    iter.next()
+                    iter.next()
+                    end += 2
+                    inCurlBrackets = false
+                }
             }
             if (!iter.hasNext()) {
                 break

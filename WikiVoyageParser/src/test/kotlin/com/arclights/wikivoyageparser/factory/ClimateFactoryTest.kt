@@ -19,8 +19,9 @@ class ClimateFactoryTest {
                     assertClimatesEquals(expectedResult, result)
                 }
     }
+}
 
-    private fun assertClimatesEquals(expectedClimate: Climate, actualClimate: Climate) {
+    internal fun assertClimatesEquals(expectedClimate: Climate, actualClimate: Climate) {
         assertEquals(expectedClimate.unit, actualClimate.unit, "Unit does not match")
         assertEquals(expectedClimate.description, actualClimate.description, "Description does not match")
 
@@ -276,4 +277,3 @@ class ClimateFactoryTest {
                             description = "Average conditions for Stockholm"
                     )
     )
-}

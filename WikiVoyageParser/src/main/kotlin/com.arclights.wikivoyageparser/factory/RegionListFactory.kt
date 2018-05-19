@@ -1,18 +1,18 @@
 package com.arclights.wikivoyageparser.factory
 
-import com.arclights.wikivoyageparser.RegioList
+import com.arclights.wikivoyageparser.RegionList
 import com.arclights.wikivoyageparser.Region
-import com.arclights.wikivoyageparser.factory.Utils.numberSequenceForAllVaildInFunction
+import com.arclights.wikivoyageparser.factory.Utils.numberSequenceForAllValidInFunction
 import com.arclights.wikivoyageparser.factory.Utils.parseKeyValues
 
 object RegionListFactory {
-    fun getRegionList(parts: List<String>): RegioList {
+    fun getRegionList(parts: List<String>): RegionList {
         val mappings = parts.parseKeyValues()
-        return RegioList(
+        return RegionList(
                 mapImageLink = mappings["regionmap"]!!,
                 text = mappings["regionmaptext"]!!,
                 mapSize = mappings["regionmapsize"]!!,
-                regions = numberSequenceForAllVaildInFunction { mappings.containsKey("region${it}name") }
+                regions = numberSequenceForAllValidInFunction { mappings.containsKey("region${it}name") }
                         .map {
                             Region(
                                     name = mappings["region${it}name"]!!,
